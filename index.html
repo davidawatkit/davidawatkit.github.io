@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>David Watkins · Solutions Engineer</title>
   <meta name="description" content="David Watkins — Computer Engineering at the University of Michigan. Solutions architecture, forward-deployed engineering, RAG and knowledge-graph systems.">
-  <meta name="theme-color" content="#6fc3ff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#041b33" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0b56d0">
 
   <!-- Social preview (drop an image at assets/img/og-image.jpg, 1200x630) -->
   <meta property="og:title" content="David Watkins · Solutions Engineer">
@@ -31,32 +30,104 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Decorative sky layers -->
-  <div class="sky" aria-hidden="true">
-    <div class="sun"></div>
-    <div class="flare flare-1"></div>
-    <div class="flare flare-2"></div>
-    <div class="flare flare-3"></div>
-    <div class="cloud cloud-1"></div>
-    <div class="cloud cloud-2"></div>
-    <div class="cloud cloud-3"></div>
-    <div class="stars"></div>
-  </div>
-  <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+  <!-- ===== Reusable SVG art ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gCloud" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="130">
+        <stop offset="0" class="cl-1"/>
+        <stop offset=".55" class="cl-2"/>
+        <stop offset="1" class="cl-3"/>
+      </linearGradient>
+      <filter id="fSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.6"/></filter>
 
-  <!-- ============ NAV ============ -->
-  <header class="nav-wrap">
-    <nav class="nav glass" aria-label="Primary">
-      <a href="#top" class="brand" aria-label="David Watkins, back to top">
-        <span class="brand-orb" aria-hidden="true">DW</span>
-        <span class="brand-name">David Watkins</span>
-      </a>
+      <!-- Butterflyfish body -->
+      <linearGradient id="gFishBody" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#ffd21f"/>
+        <stop offset=".34" stop-color="#fff3b0"/>
+        <stop offset=".62" stop-color="#ffffff"/>
+        <stop offset="1" stop-color="#eef6ff"/>
+      </linearGradient>
+      <linearGradient id="gFin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe14a"/>
+        <stop offset="1" stop-color="#f4a800"/>
+      </linearGradient>
+      <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffc061"/>
+        <stop offset=".6" stop-color="#ff7b12"/>
+        <stop offset="1" stop-color="#e05300"/>
+      </linearGradient>
+      <linearGradient id="gChromis" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1b5fd6"/>
+        <stop offset=".55" stop-color="#3fb4ff"/>
+        <stop offset="1" stop-color="#b9ecff"/>
+      </linearGradient>
+      <linearGradient id="gShine" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".85"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <clipPath id="cpFish"><path d="M16 45 C 22 18 60 10 92 30 C 104 37 112 42 116 45 C 112 49 104 54 92 60 C 60 80 22 72 16 45 Z"/></clipPath>
+
+      <symbol id="sym-cloud" viewBox="0 0 300 140">
+        <g filter="url(#fSoft)">
+          <path fill="url(#gCloud)" d="M40 122 C 4 122 4 80 42 78 C 36 44 82 28 108 50 C 118 12 182 4 200 46 C 224 28 270 44 260 82 C 298 84 296 122 262 122 Z"/>
+          <ellipse cx="120" cy="52" rx="42" ry="22" class="cl-hi"/>
+          <ellipse cx="196" cy="60" rx="30" ry="16" class="cl-hi"/>
+          <ellipse cx="62" cy="86" rx="22" ry="12" class="cl-hi"/>
+        </g>
+      </symbol>
+
+      <symbol id="sym-gull" viewBox="0 0 64 26">
+        <path d="M3 16 Q 17 2 31 13 Q 45 2 61 16" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 16 Q 8 11 12 10 M61 16 Q 56 11 52 10" fill="none" stroke="#5a6b7a" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="31" cy="14" rx="5" ry="2.4" fill="#fff"/>
+      </symbol>
+
+      <symbol id="sym-butterflyfish" viewBox="0 0 120 90">
+        <path d="M20 45 L1 27 Q 6 45 1 63 Z" fill="url(#gFin)" opacity=".92"/>
+        <path d="M28 26 Q 52 -2 94 22 L 80 32 Z" fill="url(#gFin)"/>
+        <path d="M32 66 Q 58 90 90 69 L 78 60 Z" fill="url(#gFin)"/>
+        <path d="M16 45 C 22 18 60 10 92 30 C 104 37 112 42 116 45 C 112 49 104 54 92 60 C 60 80 22 72 16 45 Z" fill="url(#gFishBody)"/>
+        <g clip-path="url(#cpFish)">
+          <rect x="86" y="0" width="8" height="90" fill="#1a1a1a"/>
+          <rect x="62" y="0" width="4" height="90" fill="#1a1a1a" opacity=".85"/>
+          <path d="M30 20 L44 70 M38 18 L52 72 M46 16 L58 74" stroke="#d9b400" stroke-width="1.6" opacity=".6"/>
+        </g>
+        <circle cx="101" cy="40" r="4" fill="#111"/>
+        <circle cx="102.4" cy="38.6" r="1.3" fill="#fff"/>
+        <path d="M30 32 C 46 20 74 18 96 32 C 74 26 48 28 30 36 Z" fill="url(#gShine)" opacity=".8"/>
+      </symbol>
+
+      <symbol id="sym-goldfish" viewBox="0 0 120 80">
+        <path d="M30 40 C 10 18 2 22 4 30 C 6 36 12 38 14 40 C 12 42 6 44 4 50 C 2 58 10 62 30 40 Z" fill="#ff8f2a" opacity=".75"/>
+        <path d="M50 22 Q 66 6 84 20 Z" fill="#ff9a3a" opacity=".85"/>
+        <path d="M28 40 C 34 18 78 12 104 32 C 112 38 114 42 104 48 C 78 66 34 62 28 40 Z" fill="url(#gGold)"/>
+        <path d="M62 52 Q 70 66 80 56 Z" fill="#ff9a3a" opacity=".85"/>
+        <circle cx="98" cy="36" r="3.6" fill="#1a1a1a"/>
+        <circle cx="99.2" cy="34.8" r="1.2" fill="#fff"/>
+        <path d="M40 30 C 56 20 84 20 100 30 C 82 26 58 28 40 36 Z" fill="url(#gShine)" opacity=".75"/>
+      </symbol>
+
+      <symbol id="sym-chromis" viewBox="0 0 90 50">
+        <path d="M18 25 L2 12 Q 7 25 2 38 Z" fill="#4cc4ff" opacity=".85"/>
+        <path d="M16 25 C 24 8 58 4 80 20 C 86 24 86 26 80 30 C 58 46 24 42 16 25 Z" fill="url(#gChromis)"/>
+        <circle cx="74" cy="22" r="2.8" fill="#0b1a33"/>
+        <circle cx="75" cy="21" r=".9" fill="#fff"/>
+        <path d="M24 18 C 40 10 62 10 76 18 C 60 15 42 16 24 22 Z" fill="url(#gShine)" opacity=".8"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ TASKBAR NAV ============ -->
+  <header class="taskbar">
+    <nav class="taskbar-inner" aria-label="Primary">
+      <a href="#top" class="start-orb" aria-label="David Watkins, back to top"><span>DW</span></a>
+      <a href="#top" class="taskbar-name">David Watkins</a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -72,37 +143,53 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor"/></svg>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor"/></svg>
       </button>
     </nav>
   </header>
 
   <main id="main">
-    <!-- ============ HERO ============ -->
-    <section class="hero" id="top">
+    <!-- ============ HERO: sky + meadow ============ -->
+    <section class="hero" id="top" aria-label="Introduction">
+      <div class="sky-art" aria-hidden="true">
+        <div class="sun"><span class="sun-rays"></span><span class="sun-core"></span></div>
+        <div class="moon"></div>
+        <span class="flare fl-1"></span><span class="flare fl-2"></span><span class="flare fl-3"></span>
+        <div class="stars"></div>
+        <svg class="cloud cl-a"><use href="#sym-cloud"/></svg>
+        <svg class="cloud cl-b"><use href="#sym-cloud"/></svg>
+        <svg class="cloud cl-c"><use href="#sym-cloud"/></svg>
+        <svg class="cloud cl-d"><use href="#sym-cloud"/></svg>
+        <svg class="cloud cl-e"><use href="#sym-cloud"/></svg>
+        <svg class="gull g-1"><use href="#sym-gull"/></svg>
+        <svg class="gull g-2"><use href="#sym-gull"/></svg>
+        <svg class="gull g-3"><use href="#sym-gull"/></svg>
+        <span class="glass-ball gb-1"></span>
+        <span class="glass-ball gb-2"></span>
+        <span class="glass-ball gb-3"></span>
+      </div>
+
       <div class="hero-inner container">
         <div class="hero-copy reveal">
-          <p class="eyebrow pill">Open to Solutions Architecture &amp; FDE roles · 2027</p>
-          <h1>Hi, I'm <span class="aqua-text">David Watkins</span>.</h1>
+          <p class="hero-badge"><span class="dot" aria-hidden="true"></span>Open to Solutions Architecture &amp; FDE roles · 2027</p>
+          <p class="hero-hi">Hi, I'm</p>
+          <h1>David Watkins</h1>
           <p class="lead">I turn messy enterprise data into answers people can trust, and I like sitting with the people who need those answers.</p>
-          <p class="sub">Computer Engineering @ University of Michigan · Former Solutions Architect Intern @ IBM</p>
+          <p class="sub">Computer Engineering · University of Michigan<br>Former Solutions Architect Intern · IBM</p>
           <div class="cta-row">
-            <a class="btn btn-aqua" href="#projects">See my work</a>
+            <a class="btn-aqua" href="#projects">See my work</a>
+            <a class="btn-aqua btn-lime" href="#contact">Say hello</a>
             <!-- Résumé button: hidden until a phone-free PDF is at assets/resume/David_Watkins_Resume.pdf. Delete `hidden` to show it. -->
-            <a class="btn btn-glass" href="assets/resume/David_Watkins_Resume.pdf" target="_blank" rel="noopener" hidden>
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Résumé
-            </a>
-            <a class="btn btn-green" href="#contact">Say hello</a>
+            <a class="btn-aqua btn-glassy" href="assets/resume/David_Watkins_Resume.pdf" target="_blank" rel="noopener" hidden>Résumé</a>
           </div>
           <ul class="social-row" aria-label="Profiles">
             <li><a class="orb-link" href="https://github.com/davidawatkit" target="_blank" rel="noopener" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.690-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.030 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.770 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
             </a></li>
             <li><a class="orb-link" href="https://www.linkedin.com/in/davidwatkins5" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.83v1.5h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13v6.43h-4v-5.7c0-1.36-.03-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3.01v5.8h-4z"/></svg>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.830v1.5h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13v6.43h-4v-5.7c0-1.36-.03-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3.01v5.8h-4z"/></svg>
             </a></li>
             <li><a class="orb-link" href="mailto:davidawatkit@gmail.com" aria-label="Email">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 6h18v12H3z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="m3 7 9 7 9-7"/></svg>
@@ -110,475 +197,878 @@
           </ul>
         </div>
 
-        <div class="hero-portrait reveal">
-          <div class="portrait-orb">
-            <!-- Drop your photo at assets/img/profile.jpg (square, ~800x800) -->
+        <div class="hero-orb reveal">
+          <div class="portrait">
+            <!-- Default art: a glass globe. Drop your photo at assets/img/profile.jpg (square, ~800x800) and it replaces the globe. -->
+            <svg class="globe" viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <radialGradient id="gSea" cx="38%" cy="32%" r="75%">
+                  <stop offset="0" stop-color="#8fe3ff"/>
+                  <stop offset=".45" stop-color="#1c8ee6"/>
+                  <stop offset="1" stop-color="#062f86"/>
+                </radialGradient>
+                <clipPath id="cpGlobe"><circle cx="100" cy="100" r="98"/></clipPath>
+              </defs>
+              <circle cx="100" cy="100" r="98" fill="url(#gSea)"/>
+              <g clip-path="url(#cpGlobe)">
+                <g class="globe-spin">
+                  <g fill="#c9f3ff" opacity=".78">
+                    <path d="M30 52c10-10 30-14 42-6 8 6 2 14 10 20 6 5 16 2 18 10 2 10-12 14-14 24-2 8 8 14 4 22-5 9-18 2-24-6-6-8-4-18-12-24-8-6-20-2-26-10-6-9-6-22 2-30z"/>
+                    <path d="M92 118c8-4 18 0 22 8 4 9-2 16 0 26 2 9 10 16 4 24-6 7-18 2-22-6-4-9 0-18-4-26-3-7-8-20 0-26z"/>
+                    <path d="M118 40c12-8 34-6 46 4 10 9 6 20 16 28 6 5 14 6 14 14 0 10-14 10-22 16-8 6-6 18-16 18-11 0-14-14-22-20-8-6-20-4-24-14-5-11 0-38 8-46z"/>
+                    <path d="M160 140c8-2 16 4 16 12s-8 12-14 10-10-20-2-22z"/>
+                  </g>
+                </g>
+                <g fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1">
+                  <ellipse cx="100" cy="100" rx="98" ry="34"/>
+                  <ellipse cx="100" cy="100" rx="98" ry="68"/>
+                  <ellipse cx="100" cy="100" rx="34" ry="98"/>
+                  <ellipse cx="100" cy="100" rx="68" ry="98"/>
+                  <path d="M2 100h196M100 2v196"/>
+                </g>
+              </g>
+            </svg>
             <img src="assets/img/profile.jpg" alt="Portrait of David Watkins" width="800" height="800" data-fallback>
-            <span class="portrait-fallback" aria-hidden="true">DW</span>
+            <span class="orb-rim" aria-hidden="true"></span>
             <span class="orb-gloss" aria-hidden="true"></span>
           </div>
-          <div class="float-chip chip-a glass">🧠 RAG · Knowledge Graphs</div>
-          <div class="float-chip chip-b glass">⚾ Wisconsin homer</div>
-          <div class="float-chip chip-c glass">〽️ Go Blue '27</div>
+          <span class="orb-shadow" aria-hidden="true"></span>
+
+          <svg class="butterfly bf-1" viewBox="0 0 80 64" aria-hidden="true">
+            <defs>
+              <linearGradient id="gWing" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#bff0ff" stop-opacity=".95"/>
+                <stop offset=".5" stop-color="#3aa8ff" stop-opacity=".85"/>
+                <stop offset="1" stop-color="#0d4fd0" stop-opacity=".9"/>
+              </linearGradient>
+            </defs>
+            <g class="wing wing-l">
+              <path d="M39 30 C 26 2 2 2 4 18 C 6 30 22 34 39 32 Z" fill="url(#gWing)" stroke="#e8fbff" stroke-width="1.4"/>
+              <path d="M39 34 C 24 36 10 46 16 56 C 22 64 34 52 39 36 Z" fill="url(#gWing)" stroke="#e8fbff" stroke-width="1.4"/>
+              <path d="M30 14 C 22 8 12 8 10 14" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+            </g>
+            <g class="wing wing-r">
+              <path d="M41 30 C 54 2 78 2 76 18 C 74 30 58 34 41 32 Z" fill="url(#gWing)" stroke="#e8fbff" stroke-width="1.4"/>
+              <path d="M41 34 C 56 36 70 46 64 56 C 58 64 46 52 41 36 Z" fill="url(#gWing)" stroke="#e8fbff" stroke-width="1.4"/>
+              <path d="M50 14 C 58 8 68 8 70 14" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+            </g>
+            <ellipse cx="40" cy="34" rx="2.4" ry="12" fill="#163a7a"/>
+          </svg>
         </div>
       </div>
 
-      <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+      <svg class="land" viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
         <defs>
-          <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" class="hill-back-top"/>
-            <stop offset="1" class="hill-back-bot"/>
+          <linearGradient id="gTower" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" class="tw-1"/>
+            <stop offset=".5" class="tw-2"/>
+            <stop offset="1" class="tw-3"/>
           </linearGradient>
-          <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" class="hill-front-top"/>
-            <stop offset="1" class="hill-front-bot"/>
+          <linearGradient id="gHaze" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" class="hz-0"/>
+            <stop offset="1" class="hz-1"/>
           </linearGradient>
+          <radialGradient id="gTree" cx="35%" cy="30%" r="70%">
+            <stop offset="0" class="tr-1"/>
+            <stop offset="1" class="tr-2"/>
+          </radialGradient>
+          <linearGradient id="gHillBack" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" class="hb-1"/>
+            <stop offset="1" class="hb-2"/>
+          </linearGradient>
+          <linearGradient id="gMeadow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" class="md-1"/>
+            <stop offset=".45" class="md-2"/>
+            <stop offset="1" class="md-3"/>
+          </linearGradient>
+          <radialGradient id="gMeadowShine" cx="50%" cy="50%" r="50%">
+            <stop offset="0" class="ms-1"/>
+            <stop offset="1" class="ms-2"/>
+          </radialGradient>
         </defs>
-        <path fill="url(#hillBack)" d="M0 120 C 240 40 420 60 640 110 S 1100 60 1440 90 V220 H0Z"/>
-        <path fill="url(#hillFront)" d="M0 170 C 300 100 520 130 760 160 S 1200 120 1440 150 V220 H0Z"/>
-        <path class="hill-shine" d="M0 170 C 300 100 520 130 760 160 S 1200 120 1440 150" fill="none" stroke-width="3"/>
+          <g class="city">
+          <rect x="800" y="163" width="34" height="43" fill="url(#gTower)"/>
+          <rect x="803" y="165" width="6" height="41" class="tower-shine"/>
+          <rect x="805" y="171" width="3" height="4" class="lit"/>
+          <rect x="812" y="171" width="3" height="4" class="lit"/>
+          <rect x="826" y="171" width="3" height="4" class="lit"/>
+          <rect x="812" y="180" width="3" height="4" class="lit"/>
+          <rect x="819" y="180" width="3" height="4" class="lit"/>
+          <rect x="805" y="189" width="3" height="4" class="lit"/>
+          <rect x="819" y="189" width="3" height="4" class="lit"/>
+          <rect x="826" y="189" width="3" height="4" class="lit"/>
+          <rect x="819" y="198" width="3" height="4" class="lit"/>
+          <rect x="826" y="198" width="3" height="4" class="lit"/>
+          <rect x="838" y="147" width="26" height="59" fill="url(#gTower)"/>
+          <rect x="841" y="149" width="5" height="57" class="tower-shine"/>
+          <rect x="857" y="164" width="3" height="4" class="lit"/>
+          <rect x="850" y="173" width="3" height="4" class="lit"/>
+          <rect x="857" y="173" width="3" height="4" class="lit"/>
+          <rect x="843" y="182" width="3" height="4" class="lit"/>
+          <rect x="850" y="182" width="3" height="4" class="lit"/>
+          <rect x="843" y="191" width="3" height="4" class="lit"/>
+          <rect x="868" y="130" width="40" height="76" fill="url(#gTower)"/>
+          <rect x="871" y="132" width="8" height="74" class="tower-shine"/>
+          <path d="M886.0,130 L888.0,114 L890.0,130 Z" class="spire"/>
+          <rect x="873" y="138" width="3" height="4" class="lit"/>
+          <rect x="887" y="138" width="3" height="4" class="lit"/>
+          <rect x="894" y="138" width="3" height="4" class="lit"/>
+          <rect x="901" y="138" width="3" height="4" class="lit"/>
+          <rect x="887" y="147" width="3" height="4" class="lit"/>
+          <rect x="873" y="156" width="3" height="4" class="lit"/>
+          <rect x="894" y="156" width="3" height="4" class="lit"/>
+          <rect x="894" y="165" width="3" height="4" class="lit"/>
+          <rect x="873" y="174" width="3" height="4" class="lit"/>
+          <rect x="894" y="174" width="3" height="4" class="lit"/>
+          <rect x="873" y="183" width="3" height="4" class="lit"/>
+          <rect x="873" y="192" width="3" height="4" class="lit"/>
+          <rect x="912" y="152" width="30" height="54" fill="url(#gTower)"/>
+          <rect x="915" y="154" width="6" height="52" class="tower-shine"/>
+          <rect x="924" y="169" width="3" height="4" class="lit"/>
+          <rect x="917" y="187" width="3" height="4" class="lit"/>
+          <rect x="917" y="196" width="3" height="4" class="lit"/>
+          <rect x="931" y="196" width="3" height="4" class="lit"/>
+          <rect x="946" y="113" width="22" height="93" fill="url(#gTower)"/>
+          <rect x="949" y="115" width="4" height="91" class="tower-shine"/>
+          <path d="M955.0,113 L957.0,97 L959.0,113 Z" class="spire"/>
+          <rect x="951" y="121" width="3" height="4" class="lit"/>
+          <rect x="958" y="121" width="3" height="4" class="lit"/>
+          <rect x="958" y="130" width="3" height="4" class="lit"/>
+          <rect x="951" y="139" width="3" height="4" class="lit"/>
+          <rect x="958" y="148" width="3" height="4" class="lit"/>
+          <rect x="958" y="175" width="3" height="4" class="lit"/>
+          <rect x="958" y="184" width="3" height="4" class="lit"/>
+          <rect x="972" y="137" width="36" height="69" fill="url(#gTower)"/>
+          <rect x="975" y="139" width="7" height="67" class="tower-shine"/>
+          <rect x="977" y="145" width="3" height="4" class="lit"/>
+          <rect x="984" y="145" width="3" height="4" class="lit"/>
+          <rect x="991" y="145" width="3" height="4" class="lit"/>
+          <rect x="998" y="145" width="3" height="4" class="lit"/>
+          <rect x="991" y="154" width="3" height="4" class="lit"/>
+          <rect x="998" y="154" width="3" height="4" class="lit"/>
+          <rect x="984" y="163" width="3" height="4" class="lit"/>
+          <rect x="977" y="181" width="3" height="4" class="lit"/>
+          <rect x="998" y="190" width="3" height="4" class="lit"/>
+          <rect x="984" y="199" width="3" height="4" class="lit"/>
+          <rect x="991" y="199" width="3" height="4" class="lit"/>
+          <rect x="998" y="199" width="3" height="4" class="lit"/>
+          <rect x="1012" y="102" width="28" height="104" fill="url(#gTower)"/>
+          <rect x="1015" y="104" width="5" height="102" class="tower-shine"/>
+          <path d="M1024.0,102 L1026.0,86 L1028.0,102 Z" class="spire"/>
+          <rect x="1017" y="110" width="3" height="4" class="lit"/>
+          <rect x="1024" y="110" width="3" height="4" class="lit"/>
+          <rect x="1031" y="110" width="3" height="4" class="lit"/>
+          <rect x="1017" y="119" width="3" height="4" class="lit"/>
+          <rect x="1024" y="119" width="3" height="4" class="lit"/>
+          <rect x="1031" y="119" width="3" height="4" class="lit"/>
+          <rect x="1017" y="128" width="3" height="4" class="lit"/>
+          <rect x="1024" y="128" width="3" height="4" class="lit"/>
+          <rect x="1024" y="137" width="3" height="4" class="lit"/>
+          <rect x="1031" y="137" width="3" height="4" class="lit"/>
+          <rect x="1017" y="146" width="3" height="4" class="lit"/>
+          <rect x="1024" y="146" width="3" height="4" class="lit"/>
+          <rect x="1031" y="146" width="3" height="4" class="lit"/>
+          <rect x="1024" y="164" width="3" height="4" class="lit"/>
+          <rect x="1031" y="164" width="3" height="4" class="lit"/>
+          <rect x="1017" y="173" width="3" height="4" class="lit"/>
+          <rect x="1024" y="173" width="3" height="4" class="lit"/>
+          <rect x="1017" y="182" width="3" height="4" class="lit"/>
+          <rect x="1024" y="182" width="3" height="4" class="lit"/>
+          <rect x="1024" y="191" width="3" height="4" class="lit"/>
+          <rect x="1044" y="125" width="42" height="81" fill="url(#gTower)"/>
+          <rect x="1047" y="127" width="8" height="79" class="tower-shine"/>
+          <path d="M1063.0,125 L1065.0,109 L1067.0,125 Z" class="spire"/>
+          <rect x="1049" y="133" width="3" height="4" class="lit"/>
+          <rect x="1049" y="142" width="3" height="4" class="lit"/>
+          <rect x="1056" y="142" width="3" height="4" class="lit"/>
+          <rect x="1063" y="142" width="3" height="4" class="lit"/>
+          <rect x="1056" y="151" width="3" height="4" class="lit"/>
+          <rect x="1063" y="151" width="3" height="4" class="lit"/>
+          <rect x="1077" y="160" width="3" height="4" class="lit"/>
+          <rect x="1056" y="169" width="3" height="4" class="lit"/>
+          <rect x="1063" y="169" width="3" height="4" class="lit"/>
+          <rect x="1070" y="169" width="3" height="4" class="lit"/>
+          <rect x="1077" y="169" width="3" height="4" class="lit"/>
+          <rect x="1049" y="178" width="3" height="4" class="lit"/>
+          <rect x="1063" y="187" width="3" height="4" class="lit"/>
+          <rect x="1070" y="187" width="3" height="4" class="lit"/>
+          <rect x="1077" y="187" width="3" height="4" class="lit"/>
+          <rect x="1049" y="196" width="3" height="4" class="lit"/>
+          <rect x="1056" y="196" width="3" height="4" class="lit"/>
+          <rect x="1090" y="146" width="26" height="60" fill="url(#gTower)"/>
+          <rect x="1093" y="148" width="5" height="58" class="tower-shine"/>
+          <rect x="1095" y="163" width="3" height="4" class="lit"/>
+          <rect x="1095" y="181" width="3" height="4" class="lit"/>
+          <rect x="1109" y="181" width="3" height="4" class="lit"/>
+          <rect x="1120" y="118" width="34" height="88" fill="url(#gTower)"/>
+          <rect x="1123" y="120" width="6" height="86" class="tower-shine"/>
+          <path d="M1135.0,118 L1137.0,102 L1139.0,118 Z" class="spire"/>
+          <rect x="1125" y="126" width="3" height="4" class="lit"/>
+          <rect x="1132" y="126" width="3" height="4" class="lit"/>
+          <rect x="1139" y="126" width="3" height="4" class="lit"/>
+          <rect x="1132" y="135" width="3" height="4" class="lit"/>
+          <rect x="1132" y="144" width="3" height="4" class="lit"/>
+          <rect x="1146" y="144" width="3" height="4" class="lit"/>
+          <rect x="1125" y="153" width="3" height="4" class="lit"/>
+          <rect x="1125" y="171" width="3" height="4" class="lit"/>
+          <rect x="1132" y="171" width="3" height="4" class="lit"/>
+          <rect x="1139" y="171" width="3" height="4" class="lit"/>
+          <rect x="1146" y="171" width="3" height="4" class="lit"/>
+          <rect x="1132" y="180" width="3" height="4" class="lit"/>
+          <rect x="1146" y="180" width="3" height="4" class="lit"/>
+          <rect x="1132" y="189" width="3" height="4" class="lit"/>
+          <rect x="1158" y="154" width="24" height="52" fill="url(#gTower)"/>
+          <rect x="1161" y="156" width="4" height="50" class="tower-shine"/>
+          <rect x="1177" y="162" width="3" height="4" class="lit"/>
+          <rect x="1170" y="171" width="3" height="4" class="lit"/>
+          <rect x="1177" y="171" width="3" height="4" class="lit"/>
+          <rect x="1170" y="180" width="3" height="4" class="lit"/>
+          <rect x="1177" y="189" width="3" height="4" class="lit"/>
+          <rect x="1186" y="140" width="38" height="66" fill="url(#gTower)"/>
+          <rect x="1189" y="142" width="7" height="64" class="tower-shine"/>
+          <rect x="1191" y="148" width="3" height="4" class="lit"/>
+          <rect x="1205" y="148" width="3" height="4" class="lit"/>
+          <rect x="1212" y="148" width="3" height="4" class="lit"/>
+          <rect x="1198" y="184" width="3" height="4" class="lit"/>
+          <rect x="1191" y="193" width="3" height="4" class="lit"/>
+          <rect x="1198" y="193" width="3" height="4" class="lit"/>
+          <rect x="1212" y="193" width="3" height="4" class="lit"/>
+          <rect x="1219" y="193" width="3" height="4" class="lit"/>
+          <rect x="1228" y="162" width="28" height="44" fill="url(#gTower)"/>
+          <rect x="1231" y="164" width="5" height="42" class="tower-shine"/>
+          <rect x="1233" y="170" width="3" height="4" class="lit"/>
+          <rect x="1240" y="179" width="3" height="4" class="lit"/>
+          <rect x="1240" y="188" width="3" height="4" class="lit"/>
+          <rect x="1240" y="197" width="3" height="4" class="lit"/>
+          </g>
+          <rect x="0" y="120" width="1600" height="100" fill="url(#gHaze)"/>
+          <g class="trees">
+          <circle cx="-10" cy="191.4" r="10.8" fill="url(#gTree)"/>
+          <circle cx="2" cy="188.4" r="14.9" fill="url(#gTree)"/>
+          <circle cx="16" cy="190.8" r="9.1" fill="url(#gTree)"/>
+          <circle cx="28" cy="188.9" r="11.6" fill="url(#gTree)"/>
+          <circle cx="39" cy="189.7" r="9.4" fill="url(#gTree)"/>
+          <circle cx="49" cy="187.3" r="13.1" fill="url(#gTree)"/>
+          <circle cx="59" cy="187.6" r="11.9" fill="url(#gTree)"/>
+          <circle cx="70" cy="189.4" r="8.1" fill="url(#gTree)"/>
+          <circle cx="81" cy="186.9" r="12.4" fill="url(#gTree)"/>
+          <circle cx="93" cy="188.9" r="8.5" fill="url(#gTree)"/>
+          <circle cx="108" cy="186.0" r="13.5" fill="url(#gTree)"/>
+          <circle cx="123" cy="188.7" r="8.7" fill="url(#gTree)"/>
+          <circle cx="134" cy="189.1" r="8.3" fill="url(#gTree)"/>
+          <circle cx="147" cy="188.4" r="9.9" fill="url(#gTree)"/>
+          <circle cx="157" cy="188.1" r="11.0" fill="url(#gTree)"/>
+          <circle cx="172" cy="187.0" r="13.7" fill="url(#gTree)"/>
+          <circle cx="182" cy="189.9" r="9.0" fill="url(#gTree)"/>
+          <circle cx="197" cy="188.9" r="12.0" fill="url(#gTree)"/>
+          <circle cx="210" cy="191.4" r="8.6" fill="url(#gTree)"/>
+          <circle cx="219" cy="189.6" r="12.8" fill="url(#gTree)"/>
+          <circle cx="231" cy="192.6" r="8.5" fill="url(#gTree)"/>
+          <circle cx="245" cy="191.3" r="12.4" fill="url(#gTree)"/>
+          <circle cx="259" cy="194.3" r="8.6" fill="url(#gTree)"/>
+          <circle cx="273" cy="195.3" r="8.5" fill="url(#gTree)"/>
+          <circle cx="287" cy="194.9" r="11.2" fill="url(#gTree)"/>
+          <circle cx="298" cy="195.3" r="11.9" fill="url(#gTree)"/>
+          <circle cx="313" cy="197.5" r="9.9" fill="url(#gTree)"/>
+          <circle cx="323" cy="197.3" r="11.7" fill="url(#gTree)"/>
+          <circle cx="333" cy="199.7" r="8.8" fill="url(#gTree)"/>
+          <circle cx="343" cy="200.7" r="8.4" fill="url(#gTree)"/>
+          <circle cx="353" cy="200.5" r="10.2" fill="url(#gTree)"/>
+          <circle cx="364" cy="199.7" r="13.3" fill="url(#gTree)"/>
+          <circle cx="375" cy="201.6" r="11.5" fill="url(#gTree)"/>
+          <circle cx="385" cy="203.0" r="10.4" fill="url(#gTree)"/>
+          <circle cx="394" cy="204.1" r="9.8" fill="url(#gTree)"/>
+          <circle cx="403" cy="202.9" r="13.1" fill="url(#gTree)"/>
+          <circle cx="416" cy="206.0" r="9.3" fill="url(#gTree)"/>
+          <circle cx="427" cy="204.0" r="14.5" fill="url(#gTree)"/>
+          <circle cx="437" cy="205.2" r="13.7" fill="url(#gTree)"/>
+          <circle cx="449" cy="207.3" r="11.5" fill="url(#gTree)"/>
+          <circle cx="463" cy="208.7" r="10.8" fill="url(#gTree)"/>
+          <circle cx="475" cy="208.4" r="12.8" fill="url(#gTree)"/>
+          <circle cx="490" cy="210.7" r="10.4" fill="url(#gTree)"/>
+          <circle cx="504" cy="210.1" r="12.9" fill="url(#gTree)"/>
+          <circle cx="516" cy="212.0" r="10.8" fill="url(#gTree)"/>
+          <circle cx="527" cy="214.0" r="8.4" fill="url(#gTree)"/>
+          <circle cx="537" cy="214.5" r="8.5" fill="url(#gTree)"/>
+          <circle cx="551" cy="214.4" r="9.8" fill="url(#gTree)"/>
+          <circle cx="561" cy="215.5" r="8.6" fill="url(#gTree)"/>
+          <circle cx="575" cy="213.1" r="14.1" fill="url(#gTree)"/>
+          <circle cx="588" cy="215.9" r="10.0" fill="url(#gTree)"/>
+          <circle cx="598" cy="216.2" r="10.1" fill="url(#gTree)"/>
+          <circle cx="610" cy="217.1" r="9.1" fill="url(#gTree)"/>
+          <circle cx="622" cy="217.1" r="9.8" fill="url(#gTree)"/>
+          <circle cx="636" cy="214.7" r="14.8" fill="url(#gTree)"/>
+          <circle cx="649" cy="217.8" r="9.7" fill="url(#gTree)"/>
+          <circle cx="663" cy="217.9" r="10.2" fill="url(#gTree)"/>
+          <circle cx="675" cy="219.2" r="8.0" fill="url(#gTree)"/>
+          <circle cx="686" cy="217.6" r="11.3" fill="url(#gTree)"/>
+          <circle cx="698" cy="218.8" r="9.4" fill="url(#gTree)"/>
+          <circle cx="710" cy="219.7" r="8.0" fill="url(#gTree)"/>
+          <circle cx="721" cy="219.4" r="8.6" fill="url(#gTree)"/>
+          <circle cx="732" cy="219.7" r="8.3" fill="url(#gTree)"/>
+          <circle cx="741" cy="218.7" r="10.1" fill="url(#gTree)"/>
+          <circle cx="751" cy="217.7" r="12.1" fill="url(#gTree)"/>
+          <circle cx="764" cy="217.1" r="13.3" fill="url(#gTree)"/>
+          <circle cx="777" cy="217.2" r="13.0" fill="url(#gTree)"/>
+          <circle cx="791" cy="218.5" r="10.7" fill="url(#gTree)"/>
+          <circle cx="802" cy="216.2" r="14.9" fill="url(#gTree)"/>
+          <circle cx="812" cy="217.1" r="13.1" fill="url(#gTree)"/>
+          <circle cx="825" cy="219.7" r="8.3" fill="url(#gTree)"/>
+          <circle cx="839" cy="216.4" r="14.2" fill="url(#gTree)"/>
+          <circle cx="851" cy="217.0" r="13.1" fill="url(#gTree)"/>
+          <circle cx="865" cy="219.2" r="9.0" fill="url(#gTree)"/>
+          <circle cx="877" cy="217.8" r="11.5" fill="url(#gTree)"/>
+          <circle cx="891" cy="216.6" r="13.6" fill="url(#gTree)"/>
+          <circle cx="905" cy="217.4" r="12.1" fill="url(#gTree)"/>
+          <circle cx="920" cy="216.9" r="12.8" fill="url(#gTree)"/>
+          <circle cx="933" cy="218.6" r="9.6" fill="url(#gTree)"/>
+          <circle cx="942" cy="219.0" r="8.9" fill="url(#gTree)"/>
+          <circle cx="953" cy="219.1" r="8.7" fill="url(#gTree)"/>
+          <circle cx="967" cy="217.3" r="11.9" fill="url(#gTree)"/>
+          <circle cx="980" cy="217.0" r="12.4" fill="url(#gTree)"/>
+          <circle cx="993" cy="217.4" r="11.4" fill="url(#gTree)"/>
+          <circle cx="1002" cy="216.2" r="13.6" fill="url(#gTree)"/>
+          <circle cx="1016" cy="217.3" r="11.5" fill="url(#gTree)"/>
+          <circle cx="1028" cy="216.7" r="12.6" fill="url(#gTree)"/>
+          <circle cx="1037" cy="216.3" r="13.2" fill="url(#gTree)"/>
+          <circle cx="1048" cy="218.8" r="8.5" fill="url(#gTree)"/>
+          <circle cx="1058" cy="216.2" r="13.1" fill="url(#gTree)"/>
+          <circle cx="1069" cy="216.1" r="13.2" fill="url(#gTree)"/>
+          <circle cx="1083" cy="217.0" r="11.5" fill="url(#gTree)"/>
+          <circle cx="1095" cy="216.9" r="11.4" fill="url(#gTree)"/>
+          <circle cx="1108" cy="215.7" r="13.4" fill="url(#gTree)"/>
+          <circle cx="1120" cy="216.0" r="12.5" fill="url(#gTree)"/>
+          <circle cx="1130" cy="217.8" r="9.0" fill="url(#gTree)"/>
+          <circle cx="1140" cy="215.3" r="13.2" fill="url(#gTree)"/>
+          <circle cx="1151" cy="215.8" r="12.0" fill="url(#gTree)"/>
+          <circle cx="1160" cy="217.6" r="8.4" fill="url(#gTree)"/>
+          <circle cx="1171" cy="215.0" r="12.7" fill="url(#gTree)"/>
+          <circle cx="1184" cy="214.7" r="12.7" fill="url(#gTree)"/>
+          <circle cx="1195" cy="215.1" r="11.6" fill="url(#gTree)"/>
+          <circle cx="1207" cy="214.9" r="11.3" fill="url(#gTree)"/>
+          <circle cx="1216" cy="213.0" r="14.3" fill="url(#gTree)"/>
+          <circle cx="1227" cy="212.3" r="14.8" fill="url(#gTree)"/>
+          <circle cx="1241" cy="215.5" r="8.1" fill="url(#gTree)"/>
+          <circle cx="1253" cy="212.0" r="13.7" fill="url(#gTree)"/>
+          <circle cx="1268" cy="212.8" r="11.1" fill="url(#gTree)"/>
+          <circle cx="1278" cy="213.2" r="9.5" fill="url(#gTree)"/>
+          <circle cx="1293" cy="212.5" r="9.5" fill="url(#gTree)"/>
+          <circle cx="1306" cy="212.2" r="9.0" fill="url(#gTree)"/>
+          <circle cx="1318" cy="208.4" r="14.7" fill="url(#gTree)"/>
+          <circle cx="1327" cy="208.3" r="13.7" fill="url(#gTree)"/>
+          <circle cx="1340" cy="207.4" r="14.2" fill="url(#gTree)"/>
+          <circle cx="1353" cy="209.1" r="9.6" fill="url(#gTree)"/>
+          <circle cx="1367" cy="207.2" r="11.4" fill="url(#gTree)"/>
+          <circle cx="1376" cy="208.4" r="8.0" fill="url(#gTree)"/>
+          <circle cx="1388" cy="205.9" r="11.2" fill="url(#gTree)"/>
+          <circle cx="1399" cy="206.3" r="9.0" fill="url(#gTree)"/>
+          <circle cx="1410" cy="204.8" r="10.2" fill="url(#gTree)"/>
+          <circle cx="1424" cy="205.0" r="8.0" fill="url(#gTree)"/>
+          <circle cx="1438" cy="200.8" r="13.9" fill="url(#gTree)"/>
+          <circle cx="1447" cy="199.7" r="14.5" fill="url(#gTree)"/>
+          <circle cx="1461" cy="198.8" r="14.3" fill="url(#gTree)"/>
+          <circle cx="1471" cy="200.0" r="10.6" fill="url(#gTree)"/>
+          <circle cx="1483" cy="196.8" r="15.0" fill="url(#gTree)"/>
+          <circle cx="1495" cy="198.3" r="10.5" fill="url(#gTree)"/>
+          <circle cx="1507" cy="197.7" r="9.9" fill="url(#gTree)"/>
+          <circle cx="1516" cy="197.7" r="8.7" fill="url(#gTree)"/>
+          <circle cx="1530" cy="196.0" r="10.0" fill="url(#gTree)"/>
+          <circle cx="1545" cy="195.2" r="9.7" fill="url(#gTree)"/>
+          <circle cx="1555" cy="193.5" r="11.6" fill="url(#gTree)"/>
+          <circle cx="1566" cy="193.3" r="10.6" fill="url(#gTree)"/>
+          <circle cx="1580" cy="190.5" r="14.2" fill="url(#gTree)"/>
+          <circle cx="1594" cy="190.7" r="12.4" fill="url(#gTree)"/>
+          <circle cx="1609" cy="188.7" r="14.6" fill="url(#gTree)"/>
+          </g>
+          <path d="M0,196.7 L10,196.2 L20,195.7 L30,195.2 L40,194.8 L50,194.4 L60,194.1 L70,193.9 L80,193.7 L90,193.6 L100,193.5 L110,193.5 L120,193.5 L130,193.6 L140,193.7 L150,193.9 L160,194.2 L170,194.5 L180,194.8 L190,195.2 L200,195.7 L210,196.1 L220,196.7 L230,197.2 L240,197.8 L250,198.4 L260,199.1 L270,199.8 L280,200.5 L290,201.2 L300,201.9 L310,202.7 L320,203.5 L330,204.3 L340,205.1 L350,205.9 L360,206.7 L370,207.5 L380,208.3 L390,209.1 L400,209.9 L410,210.7 L420,211.4 L430,212.2 L440,213.0 L450,213.7 L460,214.4 L470,215.1 L480,215.8 L490,216.4 L500,217.0 L510,217.6 L520,218.2 L530,218.8 L540,219.3 L550,219.8 L560,220.2 L570,220.7 L580,221.1 L590,221.5 L600,221.8 L610,222.1 L620,222.4 L630,222.7 L640,223.0 L650,223.2 L660,223.4 L670,223.6 L680,223.7 L690,223.9 L700,224.0 L710,224.1 L720,224.2 L730,224.2 L740,224.3 L750,224.3 L760,224.3 L770,224.4 L780,224.4 L790,224.4 L800,224.4 L810,224.3 L820,224.3 L830,224.3 L840,224.3 L850,224.2 L860,224.2 L870,224.2 L880,224.1 L890,224.1 L900,224.0 L910,224.0 L920,224.0 L930,223.9 L940,223.9 L950,223.9 L960,223.8 L970,223.8 L980,223.8 L990,223.7 L1000,223.7 L1010,223.7 L1020,223.6 L1030,223.6 L1040,223.5 L1050,223.5 L1060,223.4 L1070,223.4 L1080,223.3 L1090,223.2 L1100,223.1 L1110,223.0 L1120,222.9 L1130,222.7 L1140,222.6 L1150,222.4 L1160,222.2 L1170,222.0 L1180,221.8 L1190,221.6 L1200,221.3 L1210,221.0 L1220,220.7 L1230,220.4 L1240,220.0 L1250,219.7 L1260,219.3 L1270,218.8 L1280,218.4 L1290,217.9 L1300,217.4 L1310,216.9 L1320,216.3 L1330,215.7 L1340,215.1 L1350,214.5 L1360,213.9 L1370,213.2 L1380,212.6 L1390,211.9 L1400,211.2 L1410,210.4 L1420,209.7 L1430,209.0 L1440,208.2 L1450,207.5 L1460,206.7 L1470,206.0 L1480,205.2 L1490,204.5 L1500,203.7 L1510,203.0 L1520,202.3 L1530,201.5 L1540,200.9 L1550,200.2 L1560,199.5 L1570,198.9 L1580,198.3 L1590,197.7 L1600,197.2 L1600,320 L0,320 Z" fill="url(#gHillBack)"/>
+          <path d="M0,240.5 L10,239.9 L20,239.4 L30,238.9 L40,238.4 L50,237.9 L60,237.4 L70,237.0 L80,236.6 L90,236.2 L100,235.8 L110,235.4 L120,235.1 L130,234.8 L140,234.4 L150,234.2 L160,233.9 L170,233.6 L180,233.4 L190,233.2 L200,233.0 L210,232.8 L220,232.6 L230,232.5 L240,232.3 L250,232.2 L260,232.1 L270,232.0 L280,231.9 L290,231.8 L300,231.8 L310,231.7 L320,231.7 L330,231.7 L340,231.7 L350,231.7 L360,231.7 L370,231.7 L380,231.7 L390,231.7 L400,231.8 L410,231.8 L420,231.9 L430,232.0 L440,232.0 L450,232.1 L460,232.2 L470,232.3 L480,232.4 L490,232.5 L500,232.6 L510,232.7 L520,232.9 L530,233.0 L540,233.1 L550,233.2 L560,233.4 L570,233.5 L580,233.6 L590,233.8 L600,233.9 L610,234.1 L620,234.2 L630,234.4 L640,234.5 L650,234.7 L660,234.9 L670,235.0 L680,235.2 L690,235.4 L700,235.6 L710,235.8 L720,235.9 L730,236.1 L740,236.3 L750,236.5 L760,236.7 L770,237.0 L780,237.2 L790,237.4 L800,237.6 L810,237.8 L820,238.1 L830,238.3 L840,238.6 L850,238.8 L860,239.1 L870,239.4 L880,239.7 L890,240.0 L900,240.3 L910,240.6 L920,240.9 L930,241.2 L940,241.6 L950,241.9 L960,242.3 L970,242.6 L980,243.0 L990,243.4 L1000,243.8 L1010,244.2 L1020,244.6 L1030,245.1 L1040,245.5 L1050,246.0 L1060,246.4 L1070,246.9 L1080,247.4 L1090,247.9 L1100,248.4 L1110,248.9 L1120,249.5 L1130,250.0 L1140,250.6 L1150,251.2 L1160,251.7 L1170,252.3 L1180,252.9 L1190,253.5 L1200,254.2 L1210,254.8 L1220,255.4 L1230,256.1 L1240,256.7 L1250,257.4 L1260,258.0 L1270,258.7 L1280,259.4 L1290,260.1 L1300,260.8 L1310,261.4 L1320,262.1 L1330,262.8 L1340,263.5 L1350,264.2 L1360,264.9 L1370,265.6 L1380,266.3 L1390,267.0 L1400,267.7 L1410,268.3 L1420,269.0 L1430,269.7 L1440,270.3 L1450,271.0 L1460,271.6 L1470,272.3 L1480,272.9 L1490,273.5 L1500,274.1 L1510,274.7 L1520,275.3 L1530,275.8 L1540,276.4 L1550,276.9 L1560,277.4 L1570,277.9 L1580,278.3 L1590,278.8 L1600,279.2 L1600,320 L0,320 Z" fill="url(#gMeadow)"/>
+          <ellipse cx="760" cy="282" rx="520" ry="38" fill="url(#gMeadowShine)"/>
+          <path d="M0,240.5 L10,239.9 L20,239.4 L30,238.9 L40,238.4 L50,237.9 L60,237.4 L70,237.0 L80,236.6 L90,236.2 L100,235.8 L110,235.4 L120,235.1 L130,234.8 L140,234.4 L150,234.2 L160,233.9 L170,233.6 L180,233.4 L190,233.2 L200,233.0 L210,232.8 L220,232.6 L230,232.5 L240,232.3 L250,232.2 L260,232.1 L270,232.0 L280,231.9 L290,231.8 L300,231.8 L310,231.7 L320,231.7 L330,231.7 L340,231.7 L350,231.7 L360,231.7 L370,231.7 L380,231.7 L390,231.7 L400,231.8 L410,231.8 L420,231.9 L430,232.0 L440,232.0 L450,232.1 L460,232.2 L470,232.3 L480,232.4 L490,232.5 L500,232.6 L510,232.7 L520,232.9 L530,233.0 L540,233.1 L550,233.2 L560,233.4 L570,233.5 L580,233.6 L590,233.8 L600,233.9 L610,234.1 L620,234.2 L630,234.4 L640,234.5 L650,234.7 L660,234.9 L670,235.0 L680,235.2 L690,235.4 L700,235.6 L710,235.8 L720,235.9 L730,236.1 L740,236.3 L750,236.5 L760,236.7 L770,237.0 L780,237.2 L790,237.4 L800,237.6 L810,237.8 L820,238.1 L830,238.3 L840,238.6 L850,238.8 L860,239.1 L870,239.4 L880,239.7 L890,240.0 L900,240.3 L910,240.6 L920,240.9 L930,241.2 L940,241.6 L950,241.9 L960,242.3 L970,242.6 L980,243.0 L990,243.4 L1000,243.8 L1010,244.2 L1020,244.6 L1030,245.1 L1040,245.5 L1050,246.0 L1060,246.4 L1070,246.9 L1080,247.4 L1090,247.9 L1100,248.4 L1110,248.9 L1120,249.5 L1130,250.0 L1140,250.6 L1150,251.2 L1160,251.7 L1170,252.3 L1180,252.9 L1190,253.5 L1200,254.2 L1210,254.8 L1220,255.4 L1230,256.1 L1240,256.7 L1250,257.4 L1260,258.0 L1270,258.7 L1280,259.4 L1290,260.1 L1300,260.8 L1310,261.4 L1320,262.1 L1330,262.8 L1340,263.5 L1350,264.2 L1360,264.9 L1370,265.6 L1380,266.3 L1390,267.0 L1400,267.7 L1410,268.3 L1420,269.0 L1430,269.7 L1440,270.3 L1450,271.0 L1460,271.6 L1470,272.3 L1480,272.9 L1490,273.5 L1500,274.1 L1510,274.7 L1520,275.3 L1530,275.8 L1540,276.4 L1550,276.9 L1560,277.4 L1570,277.9 L1580,278.3 L1590,278.8 L1600,279.2" class="ridge-shine" fill="none"/>
+          <path d="M0.9,242.4 q0.9,-2.7 1.9,-5.4 M4.8,242.2 q0.6,-5.5 1.2,-11.0 M9.1,242.0 q1.7,-2.7 3.4,-5.4 M13.5,241.7 q-0.6,-4.4 -1.3,-8.8 M19.2,241.4 q1.9,-5.5 3.8,-10.9 M24.0,241.2 q-0.8,-5.1 -1.6,-10.2 M30.2,240.9 q-1.3,-4.1 -2.7,-8.2 M33.6,240.7 q1.6,-3.3 3.2,-6.7 M40.0,240.4 q1.6,-3.4 3.3,-6.8 M47.0,240.0 q-1.4,-4.3 -2.9,-8.6 M48.8,240.0 q-0.6,-2.9 -1.3,-5.7 M53.4,239.7 q-1.0,-3.5 -1.9,-6.9 M60.3,239.4 q1.0,-6.0 2.0,-12.1 M64.7,239.2 q0.1,-4.2 0.2,-8.3 M69.5,239.0 q-1.8,-3.9 -3.5,-7.7 M74.1,238.8 q-1.5,-6.4 -3.0,-12.7 M80.0,238.6 q1.5,-5.0 2.9,-10.0 M83.9,238.4 q-1.0,-3.6 -2.0,-7.2 M89.6,238.2 q1.8,-4.3 3.6,-8.6 M96.4,237.9 q-1.9,-6.0 -3.8,-12.0 M98.1,237.9 q1.6,-5.3 3.2,-10.7 M104.9,237.6 q-2.0,-4.8 -4.0,-9.7 M109.6,237.4 q1.3,-6.2 2.6,-12.4 M116.4,237.2 q-1.0,-6.4 -2.0,-12.8 M118.4,237.1 q0.1,-3.1 0.2,-6.2 M125.7,236.9 q0.9,-6.3 1.8,-12.5 M130.6,236.7 q-0.2,-5.6 -0.3,-11.1 M135.2,236.6 q1.1,-2.7 2.3,-5.3 M138.9,236.5 q0.6,-6.2 1.2,-12.4 M144.2,236.3 q-1.0,-3.0 -2.0,-6.0 M150.5,236.1 q-1.6,-5.3 -3.1,-10.6 M153.3,236.1 q0.3,-4.6 0.7,-9.2 M159.6,235.9 q0.4,-3.4 0.8,-6.8 M163.0,235.8 q-0.2,-3.7 -0.3,-7.4 M171.8,235.6 q1.5,-5.1 3.1,-10.2 M174.9,235.5 q-1.0,-3.4 -2.0,-6.9 M181.8,235.3 q-0.8,-5.3 -1.5,-10.6 M183.1,235.3 q0.7,-4.5 1.4,-9.0 M189.7,235.2 q0.7,-3.5 1.3,-7.1 M196.7,235.0 q-1.9,-3.4 -3.7,-6.8 M199.4,235.0 q0.7,-4.2 1.5,-8.4 M203.8,234.9 q1.0,-5.7 1.9,-11.4 M210.0,234.8 q1.9,-3.3 3.8,-6.6 M214.2,234.7 q-1.1,-5.8 -2.2,-11.6 M218.9,234.6 q-0.8,-5.5 -1.6,-11.1 M226.8,234.5 q-1.3,-4.5 -2.5,-9.0 M228.9,234.5 q0.7,-4.2 1.3,-8.3 M236.8,234.4 q-0.4,-3.1 -0.9,-6.2 M238.9,234.3 q-1.4,-6.4 -2.9,-12.8 M243.2,234.3 q-0.4,-2.7 -0.9,-5.5 M251.6,234.2 q0.9,-6.0 1.9,-12.1 M257.0,234.1 q-0.7,-6.2 -1.4,-12.5 M258.7,234.1 q1.0,-6.2 2.0,-12.5 M263.1,234.0 q-0.5,-5.2 -1.0,-10.3 M269.5,234.0 q-1.3,-3.8 -2.6,-7.7 M273.0,233.9 q-0.6,-3.6 -1.2,-7.2 M281.8,233.9 q1.9,-3.0 3.7,-6.0 M283.8,233.9 q1.3,-3.9 2.6,-7.9 M291.3,233.8 q-1.8,-4.2 -3.6,-8.5 M294.9,233.8 q1.7,-4.0 3.4,-8.0 M298.8,233.8 q1.6,-4.0 3.2,-7.9 M303.1,233.7 q1.2,-4.1 2.5,-8.3 M311.1,233.7 q-1.9,-2.7 -3.7,-5.3 M313.3,233.7 q-1.0,-6.2 -1.9,-12.4 M321.0,233.7 q-0.6,-6.1 -1.3,-12.2 M324.1,233.7 q0.5,-6.3 0.9,-12.7 M329.0,233.7 q-0.7,-5.4 -1.5,-10.7 M334.1,233.7 q1.0,-2.5 2.0,-5.0 M341.7,233.7 q1.8,-5.0 3.5,-10.1 M343.1,233.6 q-0.1,-3.4 -0.2,-6.9 M351.8,233.7 q-0.5,-6.3 -0.9,-12.6 M354.0,233.7 q-0.0,-4.2 -0.1,-8.4 M361.7,233.7 q1.2,-3.2 2.4,-6.5 M366.0,233.7 q1.1,-5.8 2.2,-11.6 M370.4,233.7 q-0.7,-3.8 -1.4,-7.6 M374.4,233.7 q-1.7,-5.6 -3.4,-11.3 M378.8,233.7 q-1.0,-5.5 -2.0,-11.0 M383.3,233.7 q0.2,-2.6 0.4,-5.3 M389.3,233.7 q1.5,-6.4 3.1,-12.8 M397.0,233.8 q-1.7,-3.6 -3.3,-7.1 M398.4,233.8 q0.8,-4.5 1.7,-9.0 M404.8,233.8 q-0.3,-3.4 -0.7,-6.9 M410.5,233.8 q1.0,-5.2 2.0,-10.4 M416.4,233.9 q-1.5,-5.2 -3.0,-10.3 M421.4,233.9 q0.3,-3.7 0.5,-7.4 M424.5,233.9 q-1.2,-5.5 -2.4,-10.9 M429.0,234.0 q-1.4,-3.5 -2.8,-7.0 M436.5,234.0 q-0.7,-4.8 -1.4,-9.6 M439.6,234.0 q0.0,-6.5 0.1,-12.9 M443.9,234.1 q0.6,-5.7 1.2,-11.5 M452.0,234.1 q-0.1,-2.9 -0.2,-5.8 M456.3,234.2 q1.7,-5.9 3.3,-11.7 M458.2,234.2 q-1.5,-3.7 -3.0,-7.3 M463.8,234.2 q0.3,-6.4 0.7,-12.8 M471.7,234.3 q1.5,-4.0 2.9,-8.0 M474.8,234.4 q1.1,-3.5 2.2,-7.1 M481.8,234.4 q0.4,-2.9 0.8,-5.8 M485.5,234.5 q-0.5,-3.4 -1.1,-6.7 M488.6,234.5 q-1.0,-3.3 -2.0,-6.6 M495.4,234.6 q-1.2,-5.1 -2.4,-10.2 M498.0,234.6 q0.7,-3.8 1.4,-7.6 M503.7,234.7 q-1.2,-3.7 -2.4,-7.5 M511.2,234.7 q-1.7,-4.7 -3.5,-9.4 M513.4,234.8 q0.2,-4.1 0.4,-8.2 M520.6,234.9 q-1.3,-2.9 -2.7,-5.7 M525.8,234.9 q-0.9,-4.1 -1.7,-8.3 M529.2,235.0 q-0.8,-6.3 -1.5,-12.6 M535.3,235.0 q-0.3,-3.9 -0.7,-7.9 M541.5,235.1 q-0.5,-6.5 -1.1,-13.0 M543.8,235.1 q-1.2,-5.4 -2.4,-10.8 M548.0,235.2 q-0.3,-6.1 -0.6,-12.2 M556.3,235.3 q1.5,-4.1 3.1,-8.2 M559.8,235.4 q-1.9,-3.2 -3.9,-6.3 M565.2,235.4 q1.6,-5.1 3.3,-10.1 M568.4,235.5 q-0.5,-5.0 -1.0,-10.0 M575.0,235.6 q-0.9,-3.1 -1.7,-6.2 M580.1,235.6 q-1.6,-6.2 -3.1,-12.4 M585.0,235.7 q1.9,-5.7 3.7,-11.4 M588.8,235.8 q1.8,-3.0 3.5,-6.0 M596.9,235.9 q-1.8,-4.4 -3.6,-8.9 M601.7,236.0 q1.6,-4.1 3.2,-8.1 M605.5,236.0 q-1.4,-5.8 -2.7,-11.6 M611.1,236.1 q-0.4,-3.4 -0.8,-6.8 M616.4,236.2 q-1.3,-5.8 -2.5,-11.6 M618.9,236.2 q0.1,-4.1 0.1,-8.2 M624.5,236.3 q-1.0,-3.0 -2.0,-6.0 M630.9,236.4 q-1.8,-6.1 -3.7,-12.2 M635.2,236.5 q-1.8,-5.5 -3.7,-11.1 M641.4,236.6 q0.4,-3.0 0.8,-5.9 M645.2,236.6 q-0.8,-5.0 -1.6,-10.0 M649.7,236.7 q-0.3,-4.8 -0.6,-9.7 M655.6,236.8 q-0.2,-4.3 -0.5,-8.6 M658.1,236.8 q-0.0,-5.0 -0.1,-10.0 M663.9,236.9 q1.1,-5.6 2.2,-11.1 M669.8,237.0 q-0.1,-3.2 -0.2,-6.4 M673.4,237.1 q-0.3,-3.0 -0.6,-6.0 M678.4,237.2 q0.0,-4.3 0.1,-8.5 M683.2,237.3 q-1.7,-5.0 -3.3,-10.1 M690.9,237.4 q0.0,-5.6 0.1,-11.2 M693.2,237.5 q-0.5,-4.5 -1.0,-9.0 M701.8,237.6 q1.4,-3.0 2.9,-6.1 M707.0,237.7 q1.3,-5.4 2.5,-10.9 M708.8,237.7 q-0.0,-6.4 -0.1,-12.9 M716.8,237.9 q-1.3,-6.2 -2.7,-12.3 M721.2,238.0 q-1.7,-6.2 -3.5,-12.4 M724.4,238.0 q-1.4,-5.5 -2.7,-11.0 M731.6,238.2 q1.3,-3.6 2.5,-7.2 M733.6,238.2 q1.7,-4.5 3.4,-9.0 M738.8,238.3 q0.0,-3.6 0.0,-7.1 M744.3,238.4 q-1.3,-2.6 -2.5,-5.3 M748.6,238.5 q0.7,-6.2 1.4,-12.5 M756.6,238.7 q1.1,-3.2 2.3,-6.3 M758.5,238.7 q0.5,-4.6 1.1,-9.2 M764.4,238.8 q0.2,-6.0 0.4,-12.0 M770.3,239.0 q-1.6,-6.0 -3.2,-12.1 M777.0,239.1 q-0.4,-5.0 -0.8,-10.0 M781.2,239.2 q2.0,-3.6 3.9,-7.1 M785.3,239.3 q1.1,-3.9 2.1,-7.9 M789.8,239.4 q1.0,-3.2 1.9,-6.4 M793.2,239.5 q-1.0,-5.8 -2.0,-11.6 M800.6,239.6 q0.3,-6.4 0.7,-12.9 M805.7,239.7 q-2.0,-3.8 -4.0,-7.5 M808.1,239.8 q0.5,-3.1 0.9,-6.2 M814.7,240.0 q1.6,-4.6 3.2,-9.1 M818.5,240.1 q0.6,-3.4 1.2,-6.8 M823.1,240.2 q-0.6,-2.5 -1.2,-5.0 M828.4,240.3 q-1.1,-3.9 -2.2,-7.9 M835.3,240.5 q-1.2,-4.9 -2.4,-9.7 M840.5,240.6 q-1.5,-4.4 -2.9,-8.8 M846.7,240.8 q-1.4,-3.5 -2.8,-6.9 M848.4,240.8 q1.5,-5.1 3.0,-10.1 M856.1,241.0 q-0.9,-4.1 -1.9,-8.2 M858.0,241.1 q0.2,-5.1 0.5,-10.2 M864.4,241.2 q-0.2,-5.1 -0.4,-10.2 M871.7,241.4 q-1.0,-5.4 -2.0,-10.9 M876.6,241.6 q0.1,-2.7 0.3,-5.4 M879.6,241.7 q-1.8,-3.5 -3.5,-6.9 M886.1,241.8 q0.2,-2.5 0.4,-5.1 M891.8,242.0 q-1.2,-3.1 -2.4,-6.1 M895.4,242.1 q0.6,-4.5 1.1,-9.1 M901.3,242.3 q-0.8,-3.2 -1.5,-6.4 M904.2,242.4 q1.6,-2.7 3.1,-5.4 M911.1,242.6 q-2.0,-5.4 -3.9,-10.7 M916.4,242.8 q-0.1,-5.5 -0.3,-11.0 M921.0,242.9 q-1.1,-4.3 -2.2,-8.6 M923.4,243.0 q-1.8,-3.4 -3.7,-6.9 M929.3,243.2 q0.8,-5.5 1.6,-11.0 M936.4,243.4 q-0.9,-5.3 -1.9,-10.7 M940.2,243.6 q1.2,-4.2 2.3,-8.5 M945.1,243.7 q0.6,-3.6 1.1,-7.1 M951.9,244.0 q1.5,-3.4 3.0,-6.7 M953.1,244.0 q-1.1,-3.5 -2.1,-7.1 M961.0,244.3 q1.0,-6.3 2.0,-12.6 M964.3,244.4 q-0.7,-6.0 -1.4,-12.0 M969.0,244.6 q0.5,-6.1 1.0,-12.3 M975.8,244.8 q1.9,-5.2 3.8,-10.3 M979.9,245.0 q0.8,-5.9 1.6,-11.7 M986.4,245.3 q0.9,-4.2 1.8,-8.5 M990.3,245.4 q-1.2,-3.7 -2.3,-7.5 M995.5,245.6 q1.6,-2.8 3.3,-5.6 M998.6,245.7 q-1.6,-2.6 -3.1,-5.2 M1006.7,246.1 q-1.4,-3.9 -2.9,-7.8 M1008.1,246.1 q0.8,-2.7 1.5,-5.3 M1015.5,246.4 q0.9,-5.3 1.9,-10.6 M1018.3,246.6 q-0.5,-4.9 -1.1,-9.7 M1026.3,246.9 q1.6,-5.8 3.1,-11.6 M1028.3,247.0 q1.7,-6.0 3.3,-11.9 M1036.8,247.4 q-1.2,-2.9 -2.4,-5.9 M1038.4,247.4 q1.4,-2.6 2.8,-5.3 M1046.2,247.8 q1.3,-5.0 2.6,-10.1 M1050.5,248.0 q-1.6,-3.6 -3.2,-7.3 M1053.4,248.1 q-1.2,-5.5 -2.4,-11.1 M1059.3,248.4 q-1.9,-4.2 -3.8,-8.4 M1064.0,248.6 q0.9,-3.6 1.7,-7.3 M1069.5,248.9 q1.9,-3.8 3.7,-7.6 M1075.0,249.2 q0.5,-5.9 0.9,-11.8 M1078.1,249.3 q-0.3,-4.2 -0.5,-8.3 M1086.1,249.7 q0.8,-3.9 1.6,-7.8 M1090.2,249.9 q1.4,-3.4 2.9,-6.7 M1093.4,250.1 q-1.3,-5.8 -2.6,-11.6 M1098.0,250.3 q1.0,-3.3 2.1,-6.6 M1106.9,250.8 q-0.0,-2.5 -0.1,-5.0 M1110.0,250.9 q-1.3,-5.7 -2.5,-11.4 M1115.0,251.2 q1.3,-3.9 2.7,-7.8 M1119.0,251.4 q-0.9,-6.3 -1.7,-12.6 M1123.9,251.7 q-0.0,-5.3 -0.0,-10.6 M1128.4,251.9 q-1.7,-5.0 -3.4,-10.1 M1136.2,252.4 q1.1,-5.3 2.3,-10.6 M1140.5,252.6 q-0.4,-3.9 -0.8,-7.8 M1144.6,252.8 q-1.7,-6.1 -3.3,-12.1 M1151.6,253.2 q-1.2,-2.6 -2.4,-5.2 M1154.1,253.4 q0.0,-6.1 0.0,-12.2 M1159.5,253.7 q-1.1,-6.0 -2.1,-12.1 M1164.8,254.0 q1.0,-4.6 2.0,-9.3 M1171.0,254.4 q-0.6,-5.1 -1.2,-10.2 M1174.3,254.6 q1.4,-3.1 2.7,-6.2 M1180.6,255.0 q-1.3,-5.5 -2.6,-10.9 M1184.8,255.2 q0.3,-5.6 0.6,-11.2 M1188.5,255.4 q1.5,-4.3 3.1,-8.7 M1194.0,255.8 q-0.8,-3.3 -1.6,-6.5 M1200.8,256.2 q-1.4,-5.9 -2.8,-11.7 M1203.6,256.4 q-0.7,-3.5 -1.4,-7.0 M1210.1,256.8 q-0.7,-3.1 -1.4,-6.3 M1213.8,257.0 q0.9,-6.4 1.8,-12.8 M1218.4,257.3 q-1.6,-6.3 -3.2,-12.7 M1224.5,257.7 q1.2,-6.4 2.4,-12.9 M1230.9,258.1 q-1.2,-4.2 -2.4,-8.5 M1235.6,258.4 q-1.2,-2.9 -2.3,-5.9 M1239.6,258.7 q-0.4,-2.6 -0.8,-5.3 M1246.2,259.1 q0.0,-5.3 0.0,-10.5 M1250.5,259.4 q-1.4,-4.4 -2.9,-8.7 M1255.4,259.7 q1.0,-4.1 1.9,-8.2 M1261.6,260.1 q0.3,-4.2 0.6,-8.4 M1266.0,260.4 q-1.1,-4.2 -2.2,-8.4 M1270.9,260.8 q1.1,-6.0 2.2,-12.0 M1275.8,261.1 q0.7,-5.9 1.4,-11.8 M1280.6,261.4 q-0.7,-4.3 -1.5,-8.6 M1285.5,261.8 q-0.3,-2.9 -0.6,-5.8 M1291.1,262.1 q0.5,-5.4 1.0,-10.7 M1294.0,262.3 q-0.2,-4.2 -0.4,-8.4 M1300.5,262.8 q0.7,-4.1 1.4,-8.3 M1306.7,263.2 q0.6,-3.2 1.2,-6.5 M1311.1,263.5 q-0.0,-4.1 -0.1,-8.1 M1316.9,263.9 q0.2,-2.7 0.3,-5.3 M1318.6,264.0 q1.8,-5.6 3.5,-11.3 M1325.1,264.5 q0.3,-2.9 0.6,-5.8 M1330.2,264.8 q0.0,-5.4 0.1,-10.7 M1335.6,265.2 q0.1,-5.8 0.2,-11.6 M1339.6,265.5 q-1.2,-6.3 -2.3,-12.6 M1345.7,265.9 q1.1,-4.1 2.1,-8.1 M1348.5,266.1 q-0.6,-6.4 -1.2,-12.9 M1353.2,266.4 q-0.4,-3.6 -0.8,-7.2 M1358.1,266.8 q-0.3,-4.2 -0.6,-8.3 M1365.8,267.3 q-0.9,-3.9 -1.9,-7.8 M1368.9,267.5 q1.8,-5.5 3.5,-10.9 M1375.1,268.0 q1.2,-3.4 2.4,-6.8 M1379.6,268.3 q-1.5,-3.3 -3.0,-6.7 M1386.1,268.7 q0.5,-5.7 1.1,-11.5 M1389.9,269.0 q-1.1,-4.7 -2.2,-9.5 M1396.9,269.4 q0.6,-3.9 1.1,-7.8 M1401.3,269.8 q-0.1,-5.8 -0.3,-11.5 M1404.2,269.9 q-1.5,-4.7 -3.0,-9.4 M1411.3,270.4 q1.4,-3.9 2.8,-7.8 M1414.1,270.6 q-1.0,-4.0 -2.0,-8.0 M1419.7,271.0 q-2.0,-3.2 -4.0,-6.5 M1425.9,271.4 q-1.0,-3.6 -2.0,-7.2 M1429.2,271.6 q-0.3,-4.4 -0.6,-8.8 M1435.5,272.1 q-0.6,-5.1 -1.1,-10.3 M1441.7,272.5 q-1.8,-5.9 -3.5,-11.8 M1446.3,272.8 q1.1,-6.1 2.3,-12.2 M1448.6,272.9 q0.5,-5.8 1.1,-11.7 M1453.1,273.2 q1.8,-2.5 3.6,-5.1 M1460.6,273.7 q-1.6,-3.5 -3.2,-7.0 M1463.6,273.9 q1.1,-3.4 2.2,-6.9 M1469.4,274.2 q1.6,-3.1 3.2,-6.2 M1476.2,274.7 q1.6,-3.2 3.1,-6.3 M1480.4,274.9 q0.7,-5.6 1.3,-11.3 M1486.6,275.3 q1.4,-5.7 2.7,-11.3 M1488.8,275.4 q0.1,-5.3 0.2,-10.5 M1496.0,275.9 q1.5,-4.3 3.1,-8.5 M1500.2,276.1 q-1.1,-3.6 -2.1,-7.1 M1503.6,276.3 q-1.8,-4.5 -3.5,-8.9 M1509.9,276.7 q-0.0,-3.1 -0.1,-6.2 M1515.0,277.0 q1.5,-4.7 2.9,-9.3 M1518.0,277.2 q-0.1,-5.9 -0.3,-11.7 M1525.3,277.6 q1.4,-5.2 2.7,-10.3 M1529.5,277.8 q1.8,-4.2 3.7,-8.4 M1533.3,278.0 q0.5,-5.0 1.1,-10.1 M1538.1,278.3 q0.7,-4.9 1.5,-9.9 M1546.7,278.7 q1.9,-3.8 3.9,-7.6 M1550.0,278.9 q1.6,-4.4 3.2,-8.9 M1553.1,279.0 q0.5,-5.4 1.0,-10.7 M1559.4,279.3 q-0.5,-5.9 -1.1,-11.9 M1564.9,279.6 q1.1,-4.6 2.2,-9.2 M1568.8,279.8 q-0.3,-4.2 -0.6,-8.5 M1575.2,280.1 q-0.8,-5.8 -1.7,-11.6 M1581.3,280.4 q0.0,-4.1 0.0,-8.2 M1584.1,280.5 q1.9,-4.5 3.8,-9.1 M1590.6,280.8 q-0.7,-5.7 -1.4,-11.3 M1594.3,280.9 q0.3,-3.7 0.7,-7.4" class="blades" fill="none"/>
       </svg>
     </section>
 
-    <!-- ============ ABOUT ============ -->
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">About</span>
-          <h2 id="about-title">Engineer by training, translator by instinct</h2>
-        </header>
+    <!-- ============ OCEAN ============ -->
+    <div class="ocean">
+      <svg class="surface" viewBox="0 0 1600 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="gWater" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" class="wt-1"/>
+            <stop offset="1" class="wt-2"/>
+          </linearGradient>
+          <linearGradient id="gCrest" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="gDrop" cx="35%" cy="30%" r="70%">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset=".35" stop-color="#d8f6ff" stop-opacity=".8"/>
+            <stop offset="1" stop-color="#3cc0f5" stop-opacity=".45"/>
+          </radialGradient>
+        </defs>
+        <path class="splash-back" d="M0 110 C 160 70 260 40 420 70 C 560 96 640 30 820 40 C 1000 50 1080 110 1250 80 C 1400 54 1500 60 1600 86 V200 H0 Z"/>
+        <path fill="url(#gWater)" d="M0 120 C 200 70 380 150 640 100 C 860 58 1020 60 1260 104 C 1420 132 1520 110 1600 96 V200 H0 Z"/>
+        <path d="M0 120 C 200 70 380 150 640 100 C 860 58 1020 60 1260 104 C 1420 132 1520 110 1600 96" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="3"/>
+        <path d="M330 112 C 420 80 520 60 600 76 C 520 74 430 96 360 124 Z" fill="url(#gCrest)" opacity=".8"/>
+        <path d="M960 62 C 1060 40 1160 56 1230 90 C 1150 70 1060 62 980 74 Z" fill="url(#gCrest)" opacity=".8"/>
+        <g class="drops">
+          <circle cx="520" cy="48" r="9" fill="url(#gDrop)"/>
+          <circle cx="552" cy="26" r="5" fill="url(#gDrop)"/>
+          <circle cx="590" cy="44" r="6.5" fill="url(#gDrop)"/>
+          <circle cx="1080" cy="30" r="7" fill="url(#gDrop)"/>
+          <circle cx="1112" cy="12" r="4" fill="url(#gDrop)"/>
+          <circle cx="1140" cy="36" r="10" fill="url(#gDrop)"/>
+          <circle cx="250" cy="70" r="5" fill="url(#gDrop)"/>
+          <circle cx="1420" cy="58" r="6" fill="url(#gDrop)"/>
+        </g>
+      </svg>
 
-        <div class="about-grid">
-          <div class="glass panel reveal">
-            <p>I'm a Computer Engineering student at the <strong>University of Michigan</strong> (Dean's List, graduating May 2027). The work I like best happens where a hard technical problem meets someone who has to live with it every day.</p>
-            <p>At <strong>IBM</strong>, that meant interviewing Site Reliability Engineers about how they actually investigate incidents, then designing a retrieval system over 10,000+ records that gave them back 30% of their research time. At <strong>Johnson Controls</strong>, it meant turning procurement spreadsheets from several systems into an analysis that surfaced $3.2M in potential savings.</p>
-            <p>I'm looking for <strong>Solutions Architecture</strong> and <strong>Forward Deployed Engineering</strong> roles: client-facing jobs where you scope the problem, build the system, and stay until it works.</p>
-          </div>
+      <div class="rays" aria-hidden="true"></div>
+      <div class="sea-life" aria-hidden="true">
+        <svg class="fish f-1"><use href="#sym-butterflyfish"/></svg>
+        <svg class="fish f-2 left"><use href="#sym-goldfish"/></svg>
+        <svg class="fish f-3"><use href="#sym-chromis"/></svg>
+        <svg class="fish f-4 left"><use href="#sym-butterflyfish"/></svg>
+        <svg class="fish f-5"><use href="#sym-chromis"/></svg>
+        <svg class="fish f-6 left"><use href="#sym-chromis"/></svg>
+        <svg class="fish f-7"><use href="#sym-goldfish"/></svg>
+        <svg class="fish f-8 left"><use href="#sym-butterflyfish"/></svg>
+        <svg class="fish f-9 left"><use href="#sym-goldfish"/></svg>
+        <svg class="fish f-10"><use href="#sym-butterflyfish"/></svg>
+        <svg class="fish f-11 left"><use href="#sym-chromis"/></svg>
+        <svg class="fish f-12"><use href="#sym-chromis"/></svg>
+      </div>
+      <div class="bubbles" id="bubbles" aria-hidden="true"></div>
 
-          <ul class="stats" aria-label="Highlights">
-            <li class="stat glass reveal"><span class="stat-num" data-count="3">3</span><span class="stat-label">engineering internships</span></li>
-            <li class="stat glass reveal"><span class="stat-num" data-count="10000" data-suffix="+">10,000+</span><span class="stat-label">incident &amp; change records made searchable</span></li>
-            <li class="stat glass reveal"><span class="stat-num" data-count="3.2" data-prefix="$" data-suffix="M" data-decimals="1">$3.2M</span><span class="stat-label">in cost efficiencies identified</span></li>
-            <li class="stat glass reveal"><span class="stat-num" data-count="80" data-suffix="%">80%</span><span class="stat-label">less manual analysis time, twice</span></li>
-          </ul>
+      <!-- ============ ABOUT ============ -->
+      <section class="section" id="about" aria-labelledby="about-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="about-title">About</h2>
+            <p class="section-sub">An engineer by training and a translator by instinct.</p>
+          </header>
+
+          <article class="win reveal">
+            <div class="win-bar"><span class="win-title">About David</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <div class="win-body about-body">
+              <div class="about-text">
+                <p class="instruction">Hi! I build systems that make messy data useful, and I build them with the people who use them.</p>
+                <p>I'm a Computer Engineering student at the <strong>University of Michigan</strong> (Dean's List, graduating May 2027). The work I like best happens where a hard technical problem meets someone who has to live with it every day.</p>
+                <p>At <strong>IBM</strong>, that meant interviewing Site Reliability Engineers about how they actually investigate incidents, then designing a retrieval system over 10,000+ records that gave them back 30% of their research time. At <strong>Johnson Controls</strong>, it meant turning procurement data from several systems into an analysis that surfaced $3.2M in potential savings.</p>
+                <p>I'm looking for <strong>Solutions Architecture</strong> and <strong>Forward Deployed Engineering</strong> roles: client-facing jobs where you scope the problem, build the system, and stay until it works.</p>
+              </div>
+              <ul class="gadgets" aria-label="Highlights">
+                <li class="gadget"><span class="gadget-num" data-count="3">3</span><span class="gadget-label">engineering internships</span></li>
+                <li class="gadget"><span class="gadget-num" data-count="10000" data-suffix="+">10,000+</span><span class="gadget-label">incident &amp; change records made searchable</span></li>
+                <li class="gadget"><span class="gadget-num" data-count="3.2" data-prefix="$" data-suffix="M" data-decimals="1">$3.2M</span><span class="gadget-label">in cost efficiencies identified</span></li>
+                <li class="gadget"><span class="gadget-num" data-count="80" data-suffix="%">80%</span><span class="gadget-label">less manual analysis time, twice</span></li>
+              </ul>
+            </div>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ EXPERIENCE ============ -->
-    <section class="section" id="experience" aria-labelledby="exp-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Experience</span>
-          <h2 id="exp-title">Where I've shipped things</h2>
-        </header>
+      <!-- ============ EXPERIENCE ============ -->
+      <section class="section" id="experience" aria-labelledby="exp-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="exp-title">Experience</h2>
+            <p class="section-sub">Three internships across enterprise AI, industrial analytics and a national laser lab.</p>
+          </header>
 
-        <ol class="timeline">
-          <li class="tl-item reveal">
-            <span class="tl-drop" aria-hidden="true"></span>
-            <article class="glass panel window">
-              <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <header class="tl-head">
-                <div>
-                  <h3>IBM</h3>
-                  <p class="role">Solutions Architect Intern</p>
-                </div>
-                <p class="when">May – Aug 2026<br><span>Durham, NC</span></p>
-              </header>
-              <ul class="bullets">
-                <li>Designed an AI-powered incident investigation solution for Site Reliability Engineers, turning their operational needs into a RAG architecture over 10,000+ incident and change records.</li>
-                <li>Architected hybrid retrieval and entity-resolution pipelines with Neo4j, BM25, pgvector and Llama 3.1 8B, enabling natural-language search across fragmented enterprise data.</li>
-                <li>Containerized ingestion and query services with Docker on a Kubernetes-hosted runtime, and extended the design to cross-repository search for an enterprise client.</li>
-              </ul>
-              <ul class="metric-chips" aria-label="Impact">
-                <li>−30% research time</li>
-                <li>−40% duplicate entities</li>
-                <li>Patent application filed</li>
-              </ul>
-              <a class="text-link" href="#case-study">Read the case study →</a>
+          <div class="stack">
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">IBM · Durham, NC</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <header class="job-head">
+                  <div><h3>Solutions Architect Intern</h3><p class="org">IBM</p></div>
+                  <p class="when">May – Aug 2026</p>
+                </header>
+                <ul class="bullets">
+                  <li>Designed an AI-powered incident investigation solution for Site Reliability Engineers, turning their operational needs into a RAG architecture over 10,000+ incident and change records.</li>
+                  <li>Architected hybrid retrieval and entity-resolution pipelines with Neo4j, BM25, pgvector and Llama 3.1 8B, enabling natural-language search across fragmented enterprise data.</li>
+                  <li>Containerized ingestion and query services with Docker on a Kubernetes-hosted runtime, and extended the design to cross-repository search for an enterprise client.</li>
+                </ul>
+                <ul class="chips" aria-label="Impact">
+                  <li>−30% research time</li><li>−40% duplicate entities</li><li>Patent application filed</li>
+                </ul>
+                <p class="win-foot"><a href="#case-study">Read the case study</a></p>
+              </div>
             </article>
-          </li>
 
-          <li class="tl-item reveal">
-            <span class="tl-drop" aria-hidden="true"></span>
-            <article class="glass panel window">
-              <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <header class="tl-head">
-                <div>
-                  <h3>Johnson Controls, Inc.</h3>
-                  <p class="role">Software Engineering Intern</p>
-                </div>
-                <p class="when">May – Aug 2025<br><span>Milwaukee, WI</span></p>
-              </header>
-              <ul class="bullets">
-                <li>Built a supplier-consolidation analytics solution that pulled multi-source procurement and performance data together through Python, SQL and REST APIs.</li>
-                <li>Built predictive models in R to flag supplier-performance anomalies and forecast delivery risk, feeding ETL and feature-engineering pipelines into PostgreSQL with automated versioning and schema validation.</li>
-              </ul>
-              <ul class="metric-chips" aria-label="Impact">
-                <li>$3.2M savings identified</li>
-                <li>−80% analysis time</li>
-              </ul>
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Johnson Controls · Milwaukee, WI</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <header class="job-head">
+                  <div><h3>Software Engineering Intern</h3><p class="org">Johnson Controls, Inc.</p></div>
+                  <p class="when">May – Aug 2025</p>
+                </header>
+                <ul class="bullets">
+                  <li>Built a supplier-consolidation analytics solution that pulled multi-source procurement and performance data together through Python, SQL and REST APIs.</li>
+                  <li>Built predictive models in R to flag supplier-performance anomalies and forecast delivery risk, feeding ETL and feature-engineering pipelines into PostgreSQL with automated versioning and schema validation.</li>
+                </ul>
+                <ul class="chips" aria-label="Impact"><li>$3.2M savings identified</li><li>−80% analysis time</li></ul>
+              </div>
             </article>
-          </li>
 
-          <li class="tl-item reveal">
-            <span class="tl-drop" aria-hidden="true"></span>
-            <article class="glass panel window">
-              <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <header class="tl-head">
-                <div>
-                  <h3>U-M ZEUS Laser Facility</h3>
-                  <p class="role">Research Engineering Intern</p>
-                </div>
-                <p class="when">May – Aug 2024<br><span>Ann Arbor, MI</span></p>
-              </header>
-              <ul class="bullets">
-                <li>Designed real-time optimization and testing algorithms in LabVIEW and Python that automate system stabilization for one of the most powerful lasers in the U.S.</li>
-                <li>Engineered a custom UDP-based networking protocol to replace a legacy transfer system across distributed nodes.</li>
-              </ul>
-              <ul class="metric-chips" aria-label="Impact">
-                <li>−60% manual calibration</li>
-                <li>53ms → 32ms latency</li>
-                <li>+25% throughput</li>
-              </ul>
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">U-M ZEUS Laser Facility · Ann Arbor, MI</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <header class="job-head">
+                  <div><h3>Research Engineering Intern</h3><p class="org">University of Michigan ZEUS Laser Facility</p></div>
+                  <p class="when">May – Aug 2024</p>
+                </header>
+                <ul class="bullets">
+                  <li>Designed real-time optimization and testing algorithms in LabVIEW and Python that automate system stabilization.</li>
+                  <li>Engineered a custom UDP-based networking protocol to replace a legacy transfer system across distributed nodes.</li>
+                </ul>
+                <ul class="chips" aria-label="Impact"><li>−60% manual calibration</li><li>53ms → 32ms latency</li><li>+25% throughput</li></ul>
+              </div>
             </article>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ============ CASE STUDY ============ -->
-    <section class="section" id="case-study" aria-labelledby="cs-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Case Study · IBM</span>
-          <h2 id="cs-title">From "where do I even look?" to an answer with sources</h2>
-          <p class="section-sub">When something breaks in production, SREs lose hours digging through old incidents, change tickets and repos that never share an ID scheme. I designed the system that does that digging for them.</p>
-        </header>
-
-        <div class="cs-grid">
-          <div class="glass panel reveal">
-            <h3 class="mini-title">The problem</h3>
-            <p>Incident and change records lived in separate tools. The same service, team or host showed up under a dozen spellings. Keyword search missed paraphrases, and vector search missed exact error codes.</p>
-            <h3 class="mini-title">My role</h3>
-            <p>I ran discovery with SREs, translated their workflow into requirements, and architected the retrieval and entity-resolution layers, from prototype to a containerized deployment extended for an enterprise client.</p>
-            <h3 class="mini-title">Outcome</h3>
-            <ul class="metric-chips">
-              <li>−30% manual research</li>
-              <li>−40% duplicate entities</li>
-              <li>10,000+ records</li>
-              <li>Patent application filed</li>
-            </ul>
           </div>
-
-          <figure class="pipeline glass panel reveal" aria-labelledby="pipe-cap">
-            <ol class="pipe">
-              <li class="pipe-node">
-                <span class="pipe-step">1</span>
-                <strong>Sources</strong>
-                <span>Incidents · Changes · Repos</span>
-              </li>
-              <li class="pipe-node">
-                <span class="pipe-step">2</span>
-                <strong>Ingest</strong>
-                <span>Docker services on Kubernetes</span>
-              </li>
-              <li class="pipe-node">
-                <span class="pipe-step">3</span>
-                <strong>Resolve</strong>
-                <span>Entity resolution merges duplicate services, teams, hosts</span>
-              </li>
-              <li class="pipe-node pipe-stack">
-                <span class="pipe-step">4</span>
-                <strong>Index</strong>
-                <span class="stores">
-                  <span class="store">Neo4j graph</span>
-                  <span class="store">pgvector</span>
-                  <span class="store">BM25</span>
-                </span>
-              </li>
-              <li class="pipe-node">
-                <span class="pipe-step">5</span>
-                <strong>Retrieve</strong>
-                <span>Hybrid search + graph expansion, fused ranking</span>
-              </li>
-              <li class="pipe-node">
-                <span class="pipe-step">6</span>
-                <strong>Answer</strong>
-                <span>Llama 3.1 8B, grounded with citations</span>
-              </li>
-            </ol>
-            <figcaption id="pipe-cap">Simplified, sanitized architecture. Proprietary algorithms and implementation details are left out.</figcaption>
-          </figure>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ PROJECTS ============ -->
-    <section class="section" id="projects" aria-labelledby="proj-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Featured Projects</span>
-          <h2 id="proj-title">Things I've built</h2>
-        </header>
+      <!-- ============ CASE STUDY ============ -->
+      <section class="section" id="case-study" aria-labelledby="cs-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="cs-title">Case Study</h2>
+            <p class="section-sub">IBM: from "where do I even look?" to an answer with sources.</p>
+          </header>
 
-        <div class="project-grid">
+          <article class="win reveal">
+            <div class="win-bar"><span class="win-title">AI Incident Investigation · Architecture</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <div class="win-body cs-body">
+              <div>
+                <p class="instruction">When something breaks in production, SREs lose hours digging through old incidents, change tickets and repos that never share an ID scheme. I designed the system that does that digging for them.</p>
+                <fieldset class="group"><legend>The problem</legend>
+                  <p>Incident and change records lived in separate tools. The same service, team or host showed up under a dozen spellings. Keyword search missed paraphrases, and vector search missed exact error codes.</p>
+                </fieldset>
+                <fieldset class="group"><legend>My role</legend>
+                  <p>I ran discovery with SREs, translated their workflow into requirements, and architected the retrieval and entity-resolution layers, from prototype to a containerized deployment extended for an enterprise client.</p>
+                </fieldset>
+                <fieldset class="group"><legend>Outcome</legend>
+                  <ul class="chips"><li>−30% manual research</li><li>−40% duplicate entities</li><li>10,000+ records</li><li>Patent application filed</li></ul>
+                </fieldset>
+              </div>
+
+              <figure class="pipeline" aria-labelledby="pipe-cap">
+                <ol class="pipe">
+                  <li><span class="step">1</span><div><strong>Sources</strong><span>Incidents · Changes · Repos</span></div></li>
+                  <li><span class="step">2</span><div><strong>Ingest</strong><span>Docker services on Kubernetes</span></div></li>
+                  <li><span class="step">3</span><div><strong>Resolve</strong><span>Entity resolution merges duplicate services, teams, hosts</span></div></li>
+                  <li><span class="step">4</span><div><strong>Index</strong><span class="stores"><b>Neo4j graph</b><b>pgvector</b><b>BM25</b></span></div></li>
+                  <li><span class="step">5</span><div><strong>Retrieve</strong><span>Hybrid search + graph expansion, fused ranking</span></div></li>
+                  <li><span class="step">6</span><div><strong>Answer</strong><span>Llama 3.1 8B, grounded with citations</span></div></li>
+                </ol>
+                <figcaption id="pipe-cap">Simplified, sanitized architecture. Proprietary algorithms and implementation details are left out.</figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section class="section" id="projects" aria-labelledby="proj-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="proj-title">Projects</h2>
+            <p class="section-sub">Client work, side projects, and a compiler.</p>
+          </header>
+
           <!-- Screenshots: drop images in assets/img/projects/ with the filenames below (16:10, ~1200x750) -->
-          <article class="project glass reveal">
-            <div class="shot" data-icon="🗄️">
-              <img src="assets/img/projects/nomad.jpg" alt="NOMAD Science data architecture overview" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Client project · MDC @ Michigan</p>
-              <h3>NOMAD Science Data Infrastructure</h3>
-              <p>Worked with NOMAD Science stakeholders to turn a sprawl of 100+ heterogeneous research datasets into 10 standardized schemas, then containerized the processing services behind REST APIs so validation runs itself. Manual processing time dropped 80%.</p>
-              <ul class="tags"><li>SQL</li><li>Pandas</li><li>AWS S3</li><li>Docker</li><li>REST</li></ul>
-              <div class="project-links">
-                <span class="private-badge">🔒 Private client repo</span>
-                <a class="btn btn-glass btn-sm" href="https://github.com/mdcUM" target="_blank" rel="noopener">MDC org ↗</a>
+          <div class="project-grid">
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">NOMAD Science Data Infrastructure</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-water" data-label="NOMAD"><img src="assets/img/projects/nomad.jpg" alt="NOMAD Science data architecture overview" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Client project · MDC @ Michigan</p>
+                <p>Worked with NOMAD Science stakeholders to turn a sprawl of 100+ heterogeneous research datasets into 10 standardized schemas, then containerized the processing services behind REST APIs so validation runs itself. Manual processing time dropped 80%.</p>
+                <ul class="tags"><li>SQL</li><li>Pandas</li><li>AWS S3</li><li>Docker</li><li>REST</li></ul>
+                <div class="dialog-buttons">
+                  <span class="note">Private client repo</span>
+                  <a class="btn" href="https://github.com/mdcUM" target="_blank" rel="noopener">MDC on GitHub</a>
+                </div>
               </div>
+            </article>
+
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">MLB Scouting Assistant</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-meadow" data-label="Scout"><img src="assets/img/projects/mlb-scouting.jpg" alt="MLB scouting assistant answering a natural-language question" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Side project · AI</p>
+                <p>Ask a scouting question in plain English and get an answer drawn from a knowledge graph of baseball data. Built in Jac/Jaseci, so the graph and the agent logic live in the same language. It applies the IBM-style graph-plus-LLM idea to the sport I care about most.</p>
+                <ul class="tags"><li>Jac / Jaseci</li><li>Knowledge Graph</li><li>LLM</li><li>Python</li></ul>
+                <div class="dialog-buttons"><a class="btn btn-default" href="https://github.com/davidawatkit/mlb-scouting-jac" target="_blank" rel="noopener">View repo</a></div>
+              </div>
+            </article>
+
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">mlb-alpha</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-sky" data-label="α"><img src="assets/img/projects/mlb-alpha.jpg" alt="Chart of mlb-alpha signal performance" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Side project · Modeling</p>
+                <p>A betting signal built from Statcast-derived features, held to an honest bar: walk-forward validation against real MLB closing lines, so no future information leaks into a prediction. The closing line is the hardest benchmark in sports, and that's why I use it.</p>
+                <ul class="tags"><li>Python</li><li>Statcast</li><li>Walk-forward CV</li></ul>
+                <div class="dialog-buttons"><a class="btn btn-default" href="https://github.com/davidawatkit/mlb-alpha" target="_blank" rel="noopener">View repo</a></div>
+              </div>
+            </article>
+
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">Brewed Wins</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-meadow" data-label="97 W"><img src="assets/img/projects/brewed-wins.jpg" alt="Brewed Wins dashboard showing the Brewers' season snapshot" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Side project · Data viz</p>
+                <p>An interactive dashboard telling the story of the Brewers' 97-win 2025 season. It pulls live from the MLB Stats API in the browser with no backend, across six views: run differential, player impact, lineup efficiency, win streaks, projections and game predictions.</p>
+                <ul class="tags"><li>React 19</li><li>Vite</li><li>Recharts</li><li>MLB Stats API</li></ul>
+                <div class="dialog-buttons"><a class="btn btn-default" href="https://github.com/davidawatkit/brewed-wins" target="_blank" rel="noopener">View repo</a></div>
+              </div>
+            </article>
+
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">Decaf Compiler</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-water" data-label="{ IR }"><img src="assets/img/projects/decaf.jpg" alt="Decaf compiler output showing LLVM IR" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Coursework · Systems</p>
+                <p>A full compiler for a Java/C++-subset language: lexing, parsing, AST construction, semantic checks and LLVM IR code generation with optimization passes. It's the project that taught me to respect every layer under the code I write.</p>
+                <ul class="tags"><li>C++</li><li>Flex / Bison</li><li>LLVM IR</li></ul>
+                <div class="dialog-buttons"><span class="note">Course code, available on request</span></div>
+              </div>
+            </article>
+
+            <article class="win project reveal">
+              <div class="win-bar"><span class="win-title">Momentum Tracking</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="shot scene-sky" data-label="Momentum"><img src="assets/img/projects/momentum.jpg" alt="Momentum tracking chart over a game" loading="lazy" width="1200" height="750" data-fallback></div>
+                <p class="kicker">Side project · Sports data</p>
+                <p>Tracks momentum swings inside a game from ESPN play data, alongside a Twitter scraper that measures how fan sentiment rises and crashes with each run.</p>
+                <ul class="tags"><li>Python</li><li>Scraping</li><li>Sentiment</li></ul>
+                <div class="dialog-buttons"><a class="btn btn-default" href="https://github.com/davidawatkit/momentum-tracking" target="_blank" rel="noopener">View repo</a></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SKILLS + EDUCATION ============ -->
+      <section class="section" id="skills" aria-labelledby="skills-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="skills-title">Skills &amp; Education</h2>
+          </header>
+
+          <div class="two-col">
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Skills</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <fieldset class="group"><legend>Languages</legend>
+                  <ul class="tags tags-lg"><li>Python</li><li>C++</li><li>SQL</li><li>R</li><li>Java</li><li>JavaScript / TypeScript</li><li>Bash</li></ul>
+                </fieldset>
+                <fieldset class="group"><legend>Cloud &amp; Infrastructure</legend>
+                  <ul class="tags tags-lg"><li>AWS Lambda</li><li>AWS S3</li><li>Kubernetes</li><li>Docker</li><li>PostgreSQL</li><li>REST APIs</li><li>Airflow</li><li>Git</li><li>CI/CD</li></ul>
+                </fieldset>
+                <fieldset class="group"><legend>AI &amp; Data</legend>
+                  <ul class="tags tags-lg"><li>RAG</li><li>Neo4j</li><li>Knowledge Graphs</li><li>Vector Search</li><li>Hybrid Retrieval (BM25 + Vector)</li><li>Entity Resolution</li><li>LLM Evaluation</li></ul>
+                </fieldset>
+              </div>
+            </article>
+
+            <article class="win reveal" id="education" aria-labelledby="edu-title">
+              <div class="win-bar"><span class="win-title">Education</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <div class="edu-head">
+                  <span class="icon-orb" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 4 1.5 9 12 14l10.5-5z" fill="#fff"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5L12 14.4z" fill="#fff" opacity=".9"/><path d="M21 9.5v5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </span>
+                  <div>
+                    <h3 id="edu-title">University of Michigan</h3>
+                    <p class="org">B.S. Computer Engineering · Ann Arbor</p>
+                  </div>
+                </div>
+                <dl class="props">
+                  <dt>Graduation</dt><dd>Expected May 2027</dd>
+                  <dt>GPA</dt><dd>3.50 / 4.00</dd>
+                  <dt>Honors</dt><dd>Dean's List</dd>
+                </dl>
+                <fieldset class="group"><legend>Relevant coursework</legend>
+                  <ul class="tags"><li>Data Structures &amp; Algorithms</li><li>Software Engineering</li><li>Compiler Construction</li><li>Computer Organization</li><li>Computer Vision</li><li>Advanced Analytics</li></ul>
+                </fieldset>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CURRENTLY EXPLORING ============ -->
+      <section class="section" id="now" aria-labelledby="now-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="now-title">Currently Exploring</h2>
+            <p class="section-sub">What's on my workbench right now.</p>
+          </header>
+          <div class="now-grid">
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Contracting Marketplace</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <!-- TODO: add the product name / link when you're ready to share it -->
+                <p class="instruction">Building a small-town contracting marketplace</p>
+                <p>In small towns, finding a good electrician or roofer still runs on word of mouth and a Facebook group. I'm building a marketplace that connects local customers with local contractors, and I'm handling everything from customer interviews to the product itself.</p>
+                <div class="progress" role="progressbar" aria-label="Marketplace progress" aria-valuetext="In progress"><span class="progress-fill busy"></span></div>
+                <p class="progress-label">In progress…</p>
+              </div>
+            </article>
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Baseball Analytics</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <p class="instruction">Public baseball analytics repos</p>
+                <p>Mostly for fun, partly as a lab for whatever I'm learning. New modeling ideas, retrieval tricks and data-viz experiments all get tested on baseball first. Follow along on <a href="https://github.com/davidawatkit" target="_blank" rel="noopener">GitHub</a>.</p>
+                <div class="progress" role="progressbar" aria-label="Baseball analytics" aria-valuetext="Ongoing"><span class="progress-fill busy"></span></div>
+                <p class="progress-label">Always running</p>
+              </div>
+            </article>
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Next Up</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <p class="instruction">Full-time Solutions Architecture / FDE</p>
+                <p>I'm looking for full-time roles starting after graduation in 2027, where I'd be on calls with customers in the morning and shipping the system they need by the afternoon.</p>
+                <div class="progress" role="progressbar" aria-label="Senior year" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75"><span class="progress-fill" style="width:75%"></span></div>
+                <p class="progress-label">Senior year: 75% complete</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SIDE QUESTS ============ -->
+      <section class="section" id="side-quests" aria-labelledby="sq-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <h2 id="sq-title">Side Quests</h2>
+            <p class="section-sub">Wisconsin homer, Michigan student, and happiest somewhere with no cell service.</p>
+          </header>
+
+          <div class="two-col">
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">The Home Teams</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <p>Born and raised in Wisconsin, so the loyalties come with the territory. Yes, I root for the Badgers <em>and</em> Michigan. I've made my peace with it.</p>
+                <ul class="team-list">
+                  <li class="team team-brewers">Brewers <span>MLB</span></li>
+                  <li class="team team-bucks">Bucks <span>NBA</span></li>
+                  <li class="team team-packers">Packers <span>NFL</span></li>
+                  <li class="team team-badgers">Badgers <span>NCAA</span></li>
+                  <li class="team team-michigan">Michigan <span>Go Blue</span></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="win reveal">
+              <div class="win-bar"><span class="win-title">Movie Shelf</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="win-body">
+                <ul class="movie-list">
+                  <li><span class="disc" aria-hidden="true"></span><div><strong>Moneyball</strong><span>Baseball, data and being right before everyone else is. Basically my whole personality in one movie.</span></div></li>
+                  <li><span class="disc" aria-hidden="true"></span><div><strong>Dazed and Confused</strong><span>The best hangout movie ever made. No plot needed.</span></div></li>
+                  <li><span class="disc" aria-hidden="true"></span><div><strong>Million Dollar Baby</strong><span>Grit, loyalty, and a gut punch I wasn't ready for.</span></div></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <article class="win gallery-win reveal">
+            <div class="win-bar"><span class="win-title">Pictures · Out There</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <div class="win-body">
+              <p>I travel whenever I can and camp whenever I can't afford to travel. A few favorite spots:</p>
+              <!-- Drop photos in assets/img/side-quests/ as trip-1.jpg … trip-6.jpg (4:3, ~1200x900), then edit the captions below -->
+              <ul class="gallery">
+                <li><figure class="thumb scene-sky"><img src="assets/img/side-quests/trip-1.jpg" alt="Travel photo 1" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Trip one: edit me</span></li>
+                <li><figure class="thumb scene-forest"><img src="assets/img/side-quests/trip-2.jpg" alt="Travel photo 2" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Camp spot: edit me</span></li>
+                <li><figure class="thumb scene-water"><img src="assets/img/side-quests/trip-3.jpg" alt="Travel photo 3" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Lake day: edit me</span></li>
+                <li><figure class="thumb scene-meadow"><img src="assets/img/side-quests/trip-4.jpg" alt="Travel photo 4" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Ballpark: edit me</span></li>
+                <li><figure class="thumb scene-sunset"><img src="assets/img/side-quests/trip-5.jpg" alt="Travel photo 5" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Sunset: edit me</span></li>
+                <li><figure class="thumb scene-forest"><img src="assets/img/side-quests/trip-6.jpg" alt="Travel photo 6" loading="lazy" width="1200" height="900" data-fallback></figure><span class="caption">Campfire: edit me</span></li>
+              </ul>
             </div>
           </article>
+        </div>
+      </section>
 
-          <article class="project glass reveal">
-            <div class="shot" data-icon="⚾">
-              <img src="assets/img/projects/mlb-scouting.jpg" alt="MLB scouting assistant answering a natural-language question" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Side project · AI</p>
-              <h3>MLB Scouting Assistant</h3>
-              <p>Ask a scouting question in plain English and get an answer drawn from a knowledge graph of baseball data. Built in Jac/Jaseci, so the graph and the agent logic live in the same language. It applies the IBM-style graph-plus-LLM idea to the sport I care about most.</p>
-              <ul class="tags"><li>Jac / Jaseci</li><li>Knowledge Graph</li><li>LLM</li><li>Python</li></ul>
-              <div class="project-links">
-                <a class="btn btn-aqua btn-sm" href="https://github.com/davidawatkit/mlb-scouting-jac" target="_blank" rel="noopener">Repo ↗</a>
+      <!-- ============ CONTACT ============ -->
+      <section class="section" id="contact" aria-labelledby="contact-title">
+        <div class="container">
+          <article class="win dialog reveal">
+            <div class="win-bar"><span class="win-title">Contact David</span><span class="win-ctrl" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <div class="win-body">
+              <div class="dialog-main">
+                <span class="icon-orb icon-orb-lg" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="34" height="34"><path fill="#fff" d="M3 6h18v12H3z" opacity=".95"/><path fill="none" stroke="#1d6fd0" stroke-width="1.8" stroke-linejoin="round" d="m3.5 7 8.5 6.5L20.5 7"/></svg>
+                </span>
+                <div>
+                  <h2 id="contact-title" class="instruction">Let's build something that works for real people.</h2>
+                  <p>Hiring for Solutions Architecture or FDE, or just want to argue about the Brewers' bullpen? My inbox is open: <a href="mailto:davidawatkit@gmail.com">davidawatkit@gmail.com</a></p>
+                </div>
               </div>
-            </div>
-          </article>
-
-          <article class="project glass reveal">
-            <div class="shot" data-icon="📈">
-              <img src="assets/img/projects/mlb-alpha.jpg" alt="Chart of mlb-alpha signal performance" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Side project · Modeling</p>
-              <h3>mlb-alpha</h3>
-              <p>A betting signal built from Statcast-derived features, held to an honest bar: walk-forward validation against real MLB closing lines, so no future information leaks into a prediction. The closing line is the hardest benchmark in sports, and that's why I use it.</p>
-              <ul class="tags"><li>Python</li><li>Statcast</li><li>Walk-forward CV</li></ul>
-              <div class="project-links">
-                <a class="btn btn-aqua btn-sm" href="https://github.com/davidawatkit/mlb-alpha" target="_blank" rel="noopener">Repo ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project glass reveal">
-            <div class="shot" data-icon="🍺">
-              <img src="assets/img/projects/brewed-wins.jpg" alt="Brewed Wins dashboard showing the Brewers' season snapshot" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Side project · Data viz</p>
-              <h3>Brewed Wins</h3>
-              <p>An interactive dashboard telling the story of the Brewers' 97-win 2025 season. It pulls live from the MLB Stats API in the browser with no backend, across six views: run differential, player impact, lineup efficiency, win streaks, projections and game predictions.</p>
-              <ul class="tags"><li>React 19</li><li>Vite</li><li>Recharts</li><li>MLB Stats API</li></ul>
-              <div class="project-links">
-                <a class="btn btn-aqua btn-sm" href="https://github.com/davidawatkit/brewed-wins" target="_blank" rel="noopener">Repo ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project glass reveal">
-            <div class="shot" data-icon="⚙️">
-              <img src="assets/img/projects/decaf.jpg" alt="Decaf compiler output showing LLVM IR" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Coursework · Systems</p>
-              <h3>Decaf Compiler</h3>
-              <p>A full compiler for a Java/C++-subset language: lexing, parsing, AST construction, semantic checks and LLVM IR code generation with optimization passes. It's the project that taught me to respect every layer under the code I write.</p>
-              <ul class="tags"><li>C++</li><li>Flex / Bison</li><li>LLVM IR</li></ul>
-              <div class="project-links">
-                <span class="private-badge">🎓 Course code, available on request</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project glass reveal">
-            <div class="shot" data-icon="🌊">
-              <img src="assets/img/projects/momentum.jpg" alt="Momentum tracking chart over a game" loading="lazy" width="1200" height="750" data-fallback>
-            </div>
-            <div class="project-body">
-              <p class="kicker">Side project · Sports data</p>
-              <h3>Momentum Tracking</h3>
-              <p>Tracks momentum swings inside a game from ESPN play data, alongside a Twitter scraper that measures how fan sentiment rises and crashes with each run.</p>
-              <ul class="tags"><li>Python</li><li>Scraping</li><li>Sentiment</li></ul>
-              <div class="project-links">
-                <a class="btn btn-aqua btn-sm" href="https://github.com/davidawatkit/momentum-tracking" target="_blank" rel="noopener">Repo ↗</a>
+              <div class="dialog-buttons">
+                <a class="btn" href="https://www.linkedin.com/in/davidwatkins5" target="_blank" rel="noopener">LinkedIn</a>
+                <a class="btn" href="https://github.com/davidawatkit" target="_blank" rel="noopener">GitHub</a>
+                <!-- Delete `hidden` once the PDF is added -->
+                <a class="btn" href="assets/resume/David_Watkins_Resume.pdf" target="_blank" rel="noopener" hidden>Résumé</a>
+                <a class="btn btn-default" href="mailto:davidawatkit@gmail.com">Send email</a>
               </div>
             </div>
           </article>
         </div>
+      </section>
+
+      <!-- ============ SEAFLOOR ============ -->
+      <div class="seafloor" aria-hidden="true">
+        <svg viewBox="0 0 1600 240" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="gSand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" class="sd-1"/>
+              <stop offset="1" class="sd-2"/>
+            </linearGradient>
+            <radialGradient id="gPebble" cx="35%" cy="30%" r="75%">
+              <stop offset="0" class="pb-1"/>
+              <stop offset=".6" class="pb-2"/>
+              <stop offset="1" class="pb-3"/>
+            </radialGradient>
+            <linearGradient id="gWeed" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#9dff5a"/>
+              <stop offset="1" stop-color="#1f8a2a"/>
+            </linearGradient>
+            <radialGradient id="gStar" cx="50%" cy="45%" r="60%">
+              <stop offset="0" stop-color="#ffd59a"/>
+              <stop offset="1" stop-color="#f08a3c"/>
+            </radialGradient>
+          </defs>
+          <g class="weeds">
+            <path class="weed w1" d="M190 170 C 170 120 215 90 192 40 C 214 86 196 120 206 170 Z" fill="url(#gWeed)"/>
+            <path class="weed w2" d="M214 170 C 230 130 200 100 226 60 C 214 104 240 130 226 170 Z" fill="url(#gWeed)"/>
+            <path class="weed w3" d="M1380 170 C 1360 110 1410 80 1386 24 C 1410 78 1390 116 1400 170 Z" fill="url(#gWeed)"/>
+            <path class="weed w1" d="M1404 170 C 1420 126 1392 96 1418 54 C 1406 100 1432 128 1418 170 Z" fill="url(#gWeed)"/>
+            <path class="weed w2" d="M1180 176 C 1168 140 1196 120 1184 90 C 1200 120 1188 146 1194 176 Z" fill="url(#gWeed)"/>
+          </g>
+          <path fill="url(#gSand)" d="M0 160 C 200 130 380 175 620 150 C 860 126 1040 170 1260 150 C 1420 136 1520 150 1600 140 V240 H0 Z"/>
+          <path d="M0 160 C 200 130 380 175 620 150 C 860 126 1040 170 1260 150 C 1420 136 1520 150 1600 140" class="sand-shine" fill="none"/>
+          <g>
+            <ellipse cx="330" cy="168" rx="34" ry="18" fill="url(#gPebble)"/>
+            <ellipse cx="372" cy="176" rx="20" ry="11" fill="url(#gPebble)"/>
+            <ellipse cx="1060" cy="162" rx="42" ry="22" fill="url(#gPebble)"/>
+            <ellipse cx="1112" cy="172" rx="22" ry="12" fill="url(#gPebble)"/>
+            <ellipse cx="1012" cy="174" rx="16" ry="9" fill="url(#gPebble)"/>
+            <ellipse cx="740" cy="166" rx="18" ry="10" fill="url(#gPebble)"/>
+          </g>
+          <path transform="translate(560 168) rotate(-12)" fill="url(#gStar)" stroke="#fff" stroke-opacity=".5" d="M0-22 C4-8 6-6 20-6 C9 2 8 5 12 18 C2 10 -2 10 -12 18 C-8 5 -9 2 -20 -6 C-6 -6 -4 -8 0 -22 Z"/>
+          <path transform="translate(1260 160) rotate(18) scale(.7)" fill="url(#gStar)" stroke="#fff" stroke-opacity=".5" d="M0-22 C4-8 6-6 20-6 C9 2 8 5 12 18 C2 10 -2 10 -12 18 C-8 5 -9 2 -20 -6 C-6 -6 -4 -8 0 -22 Z"/>
+        </svg>
+        <footer class="footer">
+          <p>© <span id="year">2026</span> David Watkins · Hand-built with HTML, CSS &amp; an unreasonable amount of gloss.</p>
+          <a class="to-top" href="#top">Back to top ↑</a>
+        </footer>
       </div>
-    </section>
-
-    <!-- ============ SKILLS ============ -->
-    <section class="section" id="skills" aria-labelledby="skills-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Skills</span>
-          <h2 id="skills-title">The toolbox</h2>
-        </header>
-
-        <div class="skills-grid">
-          <div class="skill-card glass panel reveal">
-            <div class="skill-orb orb-blue" aria-hidden="true">{ }</div>
-            <h3>Languages</h3>
-            <ul class="bubble-tags">
-              <li>Python</li><li>C++</li><li>SQL</li><li>R</li><li>Java</li><li>JavaScript / TypeScript</li><li>Bash</li>
-            </ul>
-          </div>
-          <div class="skill-card glass panel reveal">
-            <div class="skill-orb orb-green" aria-hidden="true">☁</div>
-            <h3>Cloud &amp; Infrastructure</h3>
-            <ul class="bubble-tags">
-              <li>AWS Lambda</li><li>AWS S3</li><li>Kubernetes</li><li>Docker</li><li>PostgreSQL</li><li>REST APIs</li><li>Airflow</li><li>Git</li><li>CI/CD</li>
-            </ul>
-          </div>
-          <div class="skill-card glass panel reveal">
-            <div class="skill-orb orb-teal" aria-hidden="true">✦</div>
-            <h3>AI &amp; Data</h3>
-            <ul class="bubble-tags">
-              <li>RAG</li><li>Neo4j</li><li>Knowledge Graphs</li><li>Vector Search</li><li>Hybrid Retrieval (BM25 + Vector)</li><li>Entity Resolution</li><li>LLM Evaluation</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ EDUCATION ============ -->
-    <section class="section section-tight" id="education" aria-labelledby="edu-title">
-      <div class="container">
-        <article class="edu glass panel reveal">
-          <div class="edu-badge" aria-hidden="true">M</div>
-          <div class="edu-body">
-            <span class="pill eyebrow">Education</span>
-            <h2 id="edu-title">University of Michigan</h2>
-            <p class="role">B.S. Computer Engineering · GPA 3.50 · Dean's List · Expected May 2027</p>
-            <ul class="bubble-tags">
-              <li>Data Structures &amp; Algorithms</li><li>Software Engineering</li><li>Compiler Construction</li><li>Computer Organization</li><li>Computer Vision</li><li>Advanced Analytics</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ CURRENTLY EXPLORING ============ -->
-    <section class="section" id="now" aria-labelledby="now-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Currently Exploring</span>
-          <h2 id="now-title">What's on my workbench</h2>
-        </header>
-        <div class="now-grid">
-          <article class="glass panel now-card reveal">
-            <span class="now-status"><span class="pulse" aria-hidden="true"></span> In progress</span>
-            <h3>🔨 A small-town contracting marketplace</h3>
-            <!-- TODO: add the product name / link when you're ready to share it -->
-            <p>In small towns, finding a good electrician or roofer still runs on word of mouth and a Facebook group. I'm building a marketplace that connects local customers with local contractors, and I'm handling everything from customer interviews to the product itself.</p>
-          </article>
-          <article class="glass panel now-card reveal">
-            <span class="now-status"><span class="pulse" aria-hidden="true"></span> Always on</span>
-            <h3>⚾ Public baseball analytics repos</h3>
-            <p>Mostly for fun, partly as a lab for whatever I'm learning. New modeling ideas, retrieval tricks and data-viz experiments all get tested on baseball first. Follow along on <a href="https://github.com/davidawatkit" target="_blank" rel="noopener">GitHub</a>.</p>
-          </article>
-          <article class="glass panel now-card reveal">
-            <span class="now-status"><span class="pulse pulse-green" aria-hidden="true"></span> Looking</span>
-            <h3>🚀 Next: Solutions Architecture / FDE</h3>
-            <p>I'm looking for full-time roles starting after graduation in 2027, where I'd be on calls with customers in the morning and shipping the system they need by the afternoon.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SIDE QUESTS ============ -->
-    <section class="section" id="side-quests" aria-labelledby="sq-title">
-      <div class="container">
-        <header class="section-head reveal">
-          <span class="pill eyebrow">Side Quests</span>
-          <h2 id="sq-title">Off the clock</h2>
-          <p class="section-sub">Wisconsin homer, Michigan student, and happiest somewhere with no cell service.</p>
-        </header>
-
-        <div class="sq-top">
-          <article class="glass panel reveal">
-            <h3 class="mini-title">🏟️ The home teams</h3>
-            <p class="muted">Born and raised in Wisconsin, so the loyalties come with the territory. Yes, I root for the Badgers <em>and</em> Michigan. I've made my peace with it.</p>
-            <ul class="team-list">
-              <li class="team team-brewers">Brewers <span>MLB</span></li>
-              <li class="team team-bucks">Bucks <span>NBA</span></li>
-              <li class="team team-packers">Packers <span>NFL</span></li>
-              <li class="team team-badgers">Badgers <span>NCAA</span></li>
-              <li class="team team-michigan">Michigan <span>Go Blue</span></li>
-            </ul>
-          </article>
-
-          <article class="glass panel reveal">
-            <h3 class="mini-title">🎬 The movie shelf</h3>
-            <ul class="movie-list">
-              <li class="movie">
-                <span class="ticket" aria-hidden="true">01</span>
-                <div><strong>Moneyball</strong><span>Baseball, data and being right before everyone else is. Basically my whole personality in one movie.</span></div>
-              </li>
-              <li class="movie">
-                <span class="ticket" aria-hidden="true">02</span>
-                <div><strong>Dazed and Confused</strong><span>The best hangout movie ever made. No plot needed.</span></div>
-              </li>
-              <li class="movie">
-                <span class="ticket" aria-hidden="true">03</span>
-                <div><strong>Million Dollar Baby</strong><span>Grit, loyalty, and a gut punch I wasn't ready for.</span></div>
-              </li>
-            </ul>
-          </article>
-        </div>
-
-        <article class="glass panel reveal postcards-wrap">
-          <h3 class="mini-title">🏕️ Out there</h3>
-          <p class="muted">I travel whenever I can and camp whenever I can't afford to travel. A few favorite spots:</p>
-          <!-- Drop photos in assets/img/side-quests/ as trip-1.jpg … trip-6.jpg (4:3, ~1200x900), then edit the captions below -->
-          <ul class="postcards">
-            <li class="postcard" data-icon="🏔️"><img src="assets/img/side-quests/trip-1.jpg" alt="Travel photo 1" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Trip one: edit me</span></li>
-            <li class="postcard" data-icon="🌲"><img src="assets/img/side-quests/trip-2.jpg" alt="Travel photo 2" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Camp spot: edit me</span></li>
-            <li class="postcard" data-icon="🌊"><img src="assets/img/side-quests/trip-3.jpg" alt="Travel photo 3" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Lake day: edit me</span></li>
-            <li class="postcard" data-icon="🏟️"><img src="assets/img/side-quests/trip-4.jpg" alt="Travel photo 4" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Ballpark: edit me</span></li>
-            <li class="postcard" data-icon="🌅"><img src="assets/img/side-quests/trip-5.jpg" alt="Travel photo 5" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Sunset: edit me</span></li>
-            <li class="postcard" data-icon="🔥"><img src="assets/img/side-quests/trip-6.jpg" alt="Travel photo 6" loading="lazy" width="1200" height="900" data-fallback><span class="caption">Campfire: edit me</span></li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ CONTACT ============ -->
-    <section class="section" id="contact" aria-labelledby="contact-title">
-      <div class="container">
-        <div class="contact glass panel reveal">
-          <span class="pill eyebrow">Contact</span>
-          <h2 id="contact-title">Let's build something that works for real people</h2>
-          <p class="section-sub">Hiring for Solutions Architecture or FDE, or just want to argue about the Brewers' bullpen? My inbox is open.</p>
-          <div class="cta-row center">
-            <a class="btn btn-aqua btn-lg" href="mailto:davidawatkit@gmail.com">✉️ davidawatkit@gmail.com</a>
-          </div>
-          <div class="cta-row center">
-            <a class="btn btn-glass" href="https://www.linkedin.com/in/davidwatkins5" target="_blank" rel="noopener">LinkedIn ↗</a>
-            <a class="btn btn-glass" href="https://github.com/davidawatkit" target="_blank" rel="noopener">GitHub ↗</a>
-            <!-- Delete `hidden` once the PDF is added -->
-            <a class="btn btn-green" href="assets/resume/David_Watkins_Resume.pdf" target="_blank" rel="noopener" hidden>Download résumé</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
-
-  <footer class="footer">
-    <p>© <span id="year">2026</span> David Watkins · Hand-built with HTML, CSS &amp; an unreasonable amount of gloss.</p>
-    <a class="to-top" href="#top">Back to top ↑</a>
-  </footer>
 
   <script src="js/main.js" defer></script>
 </body>

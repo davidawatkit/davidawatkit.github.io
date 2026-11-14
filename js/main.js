@@ -9,13 +9,14 @@
   var themeBtn = document.getElementById('themeToggle');
   var metaThemes = document.querySelectorAll('meta[name="theme-color"]');
 
+
   function applyTheme(t, save) {
     root.setAttribute('data-theme', t);
     if (themeBtn) {
-      themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to day mode' : 'Switch to night mode');
     }
     metaThemes.forEach(function (m) {
-      m.setAttribute('content', t === 'dark' ? '#041b33' : '#6fc3ff');
+      m.setAttribute('content', t === 'dark' ? '#020a1f' : '#0b56d0');
     });
     if (save) {
       try { localStorage.setItem('theme', t); } catch (e) { /* storage unavailable */ }
@@ -86,7 +87,6 @@
         if (!entry.isIntersecting) return;
         var id = entry.target.id;
         // Map sub-sections to the nearest nav item
-        if (id === 'education') id = 'skills';
         if (id === 'now') id = 'side-quests';
         Object.keys(linkMap).forEach(function (k) {
           var on = k === id;
@@ -123,7 +123,7 @@
     return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   }
 
-  var counters = document.querySelectorAll('.stat-num[data-count]');
+  var counters = document.querySelectorAll('.gadget-num[data-count]');
   if (!reduceMotion && 'IntersectionObserver' in window) {
     var countObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -152,7 +152,7 @@
   /* ---------- Bubbles ---------- */
   var bubbleLayer = document.getElementById('bubbles');
   if (bubbleLayer && !reduceMotion) {
-    var count = window.innerWidth < 600 ? 10 : 22;
+    var count = window.innerWidth < 600 ? 10 : 20;
     for (var i = 0; i < count; i++) {
       var b = document.createElement('span');
       var size = 14 + Math.random() * 56;

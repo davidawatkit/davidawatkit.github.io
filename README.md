@@ -1,6 +1,6 @@
 # davidawatkit.github.io
 
-My personal portfolio: plain HTML, CSS and vanilla JS with a Frutiger Aero look. There's no build step and no dependencies other than Google Fonts.
+My personal portfolio: plain HTML, CSS and vanilla JS with a Frutiger Aero look (sky and meadow hero, an ocean you scroll down through, Vista/7-style glass windows, and a night mode). There's no build step and no dependencies other than Google Fonts.
 
 ## Structure
 
@@ -21,7 +21,7 @@ assets/
 
 ## Adding your images
 
-Any image that's missing falls back to a glossy placeholder, so you can add them in any order. Filenames are **case-sensitive** on GitHub Pages.
+Any image that's missing falls back to placeholder art (a glass globe for your portrait, little sky/water/forest scenes for the rest), so you can add them in any order. Filenames are **case-sensitive** on GitHub Pages.
 
 | Where it shows | Drop the file at | Suggested size |
 |---|---|---|
